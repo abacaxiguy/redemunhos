@@ -1,0 +1,296 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    color: #000;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body#sobre {
+    overflow-y: hidden;
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 40px;
+}
+
+.watermark {
+    position: fixed;
+    top: 50%;
+    left: 51.5%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    opacity: 0.12;
+    pointer-events: none;
+}
+
+.watermark img {
+    width: 800px;
+    height: 800px;
+    object-fit: contain;
+}
+
+.header-image {
+    position: absolute;
+    top: 40px;
+    right: 80px;
+    z-index: 3;
+}
+
+.art-drawing {
+    width: 400px;
+    height: auto;
+}
+
+#img-telainicial {
+    top: 40px;
+    right: 30px;
+}
+
+#img-telainicial .art-drawing {
+    width: 497px;
+    height: auto;
+}
+
+#img-dalirica {
+    top: 40px;
+    right: 100px;
+}
+
+#img-dalirica .art-drawing {
+    width: 360px;
+    height: auto;
+}
+
+#img-danarrativa {
+    top: 24px;
+    right: 160px;
+}
+
+#img-danarrativa .art-drawing {
+    width: 294px;
+    height: auto;
+}
+
+.main-header {
+    margin-top: 80px;
+}
+
+.main-header h1 {
+    font-size: 72px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    letter-spacing: 10px;
+    line-height: 49px;
+    margin-left: -4px;
+}
+
+.subtitle {
+    font-size: 24px;
+    font-weight: 400;
+    color: #000;
+}
+
+.main-nav {
+    position: fixed;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 60px;
+    z-index: 10;
+}
+
+.main-nav a {
+    color: #000;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 400;
+    transition: opacity 0.3s;
+}
+
+.main-nav a:hover {
+    opacity: 0.6;
+}
+
+.back-arrow {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 40px;
+    height: 40px;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+    rotate: 270deg;
+}
+
+.back-arrow img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.back-arrow:hover {
+    opacity: 0.7;
+}
+
+.section-header h1 {
+    font-size: 64px;
+    font-weight: 400;
+    margin-bottom: 60px;
+    margin-top: 80px;
+}
+
+.post-list {
+    margin-top: 80px;
+    max-width: 600px;
+}
+
+.post-list a {
+    display: block;
+    color: #000;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.post-list a:hover {
+    opacity: 0.6;
+}
+
+.content-area {
+    max-width: 900px;
+    margin: 80px auto;
+    padding: 0 60px;
+}
+
+.content-area h1 {
+    font-size: 56px;
+    font-weight: 400;
+    margin-bottom: 60px;
+}
+
+.definition {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+.definition strong {
+    font-weight: 600;
+}
+
+.link-bottom {
+    text-align: right;
+    margin-top: 80px;
+}
+
+.link-bottom a {
+    color: #d32f2f;
+    text-decoration: none;
+    font-size: 18px;
+    transition: opacity 0.3s;
+}
+
+.link-bottom a:hover {
+    opacity: 0.7;
+}
+
+.blog-post {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 0 60px;
+}
+
+.blog-post h1 {
+    font-size: 48px;
+    font-weight: 400;
+    margin-bottom: 60px;
+    line-height: 1.3;
+}
+
+.blog-post p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    text-align: justify;
+}
+
+.post-icon {
+    text-align: center;
+    margin: 60px 0;
+}
+
+.post-icon img {
+    width: 80px;
+    height: auto;
+}
+
+.text-end-marker {
+    text-align: center;
+    margin: 60px 0 40px 0;
+}
+
+.text-end-marker img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    opacity: 1;
+}
+
+.post-tags {
+    text-align: center;
+    margin-top: 80px;
+    font-size: 16px;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .main-header h1 {
+        font-size: 48px;
+    }
+    
+    .subtitle {
+        font-size: 18px;
+    }
+    
+    .main-nav {
+        flex-direction: column;
+        gap: 20px;
+        bottom: 60px;
+    }
+    
+    .main-nav a {
+        font-size: 22px;
+    }
+    
+    .header-image {
+        right: 20px;
+        top: 20px;
+    }
+    
+    .art-drawing {
+        width: 150px;
+    }
+    
+    .section-header h1 {
+        font-size: 42px;
+    }
+    
+    .blog-post h1 {
+        font-size: 32px;
+    }
+}
+
