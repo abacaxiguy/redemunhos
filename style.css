@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+a {
+    color: #000;
+}
+
 body {
     font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f5f5;
@@ -23,6 +27,7 @@ body#sobre {
     max-width: 1200px;
     margin: 0 auto;
     padding: 60px 40px;
+    width: 100%;
 }
 
 .watermark {
@@ -33,11 +38,15 @@ body#sobre {
     z-index: 0;
     opacity: 0.12;
     pointer-events: none;
+    width: 90vw;
+    max-width: 800px;
+    height: 90vw;
+    max-height: 800px;
 }
 
 .watermark img {
-    width: 800px;
-    height: 800px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
@@ -51,6 +60,7 @@ body#sobre {
 .art-drawing {
     width: 400px;
     height: auto;
+    max-width: 100%;
 }
 
 #img-telainicial {
@@ -186,6 +196,7 @@ body#sobre {
     line-height: 1.8;
     margin-bottom: 40px;
     text-align: justify;
+    padding: 0 140px;
 }
 
 .definition strong {
@@ -257,40 +268,297 @@ body#sobre {
     color: #666;
 }
 
-@media (max-width: 768px) {
+.credits {
+    text-align: center;
+}
+
+.credits strong {
+    font-weight: 800;
+}
+
+.credit {
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 1200px) {
+    .container {
+        padding: 40px 30px;
+    }
+    
+    .definition {
+        padding: 0 80px;
+    }
+    
+    .art-drawing {
+        width: 300px;
+    }
+    
+    #img-telainicial .art-drawing {
+        width: 380px;
+    }
+    
+    #img-dalirica .art-drawing {
+        width: 280px;
+    }
+    
+    #img-danarrativa .art-drawing {
+        width: 230px;
+    }
+}
+
+@media (max-width: 992px) {
     .main-header h1 {
-        font-size: 48px;
+        font-size: 56px;
+        letter-spacing: 8px;
     }
     
     .subtitle {
-        font-size: 18px;
+        font-size: 20px;
+    }
+    
+    .section-header h1 {
+        font-size: 52px;
+    }
+    
+    .content-area {
+        padding: 0 40px;
+    }
+    
+    .definition {
+        padding: 0 60px;
+    }
+    
+    .blog-post {
+        padding: 0 40px;
+    }
+    
+    .header-image {
+        right: 50px;
+    }
+    
+    .art-drawing {
+        width: 260px;
+    }
+    
+    #img-telainicial {
+        right: 25px;
+    }
+    
+    #img-telainicial .art-drawing {
+        width: 320px;
+    }
+    
+    #img-dalirica {
+        right: 70px;
+    }
+    
+    #img-dalirica .art-drawing {
+        width: 240px;
+    }
+    
+    #img-danarrativa {
+        right: 100px;
+    }
+    
+    #img-danarrativa .art-drawing {
+        width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 40px 20px;
+    }
+    
+    .main-header {
+        margin-top: 40px;
+    }
+    
+    .main-header h1 {
+        font-size: 42px;
+        letter-spacing: 6px;
+        line-height: 1.2;
+    }
+    
+    .subtitle {
+        font-size: 16px;
     }
     
     .main-nav {
         flex-direction: column;
         gap: 20px;
-        bottom: 60px;
+        bottom: 15%;
+        align-items: center;
     }
     
     .main-nav a {
-        font-size: 22px;
+        font-size: 20px;
     }
     
     .header-image {
         right: 20px;
+        top: 30px;
+    }
+    
+    .art-drawing {
+        width: 180px !important;
+        max-width: 100%;
+    }
+    
+    #img-telainicial {
+        right: 15px;
+        top: 30px;
+    }
+    
+    #img-telainicial .art-drawing {
+        width: 220px !important;
+    }
+    
+    #img-dalirica {
+        right: 30px;
+        top: 30px;
+    }
+    
+    #img-dalirica .art-drawing {
+        width: 180px !important;
+    }
+    
+    #img-danarrativa {
+        right: 40px;
+        top: 20px;
+    }
+    
+    #img-danarrativa .art-drawing {
+        width: 150px !important;
+    }
+    
+    .section-header h1 {
+        font-size: 38px;
+        margin-bottom: 40px;
+        margin-top: 40px;
+    }
+    
+    .blog-post h1 {
+        font-size: 28px;
+        margin-bottom: 40px;
+    }
+    
+    .blog-post {
+        padding: 0 20px;
+        margin: 40px auto;
+    }
+    
+    .content-area {
+        padding: 0 20px;
+        margin: 40px auto;
+    }
+    
+    .definition {
+        padding: 0 20px;
+        font-size: 16px;
+    }
+    
+    .post-list {
+        margin-top: 40px;
+    }
+    
+    .post-list a {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .back-arrow {
+        top: 20px;
+        left: 20px;
+        width: 32px;
+        height: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header h1 {
+        font-size: 32px;
+        letter-spacing: 4px;
+    }
+    
+    .subtitle {
+        font-size: 14px;
+    }
+    
+    .main-nav {
+        bottom: 10%;
+        gap: 18px;
+    }
+    
+    .main-nav a {
+        font-size: 18px;
+    }
+    
+    .section-header h1 {
+        font-size: 32px;
+    }
+    
+    .blog-post h1 {
+        font-size: 24px;
+    }
+    
+    .blog-post p {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+    
+    .definition {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+    
+    .header-image {
+        right: 10px;
         top: 20px;
     }
     
     .art-drawing {
-        width: 150px;
+        width: 120px !important;
     }
     
-    .section-header h1 {
-        font-size: 42px;
+    #img-telainicial {
+        right: 10px;
+        top: 20px;
     }
     
-    .blog-post h1 {
-        font-size: 32px;
+    #img-telainicial .art-drawing {
+        width: 150px !important;
+    }
+    
+    #img-dalirica {
+        right: 20px;
+        top: 20px;
+    }
+    
+    #img-dalirica .art-drawing {
+        width: 120px !important;
+    }
+    
+    #img-danarrativa {
+        right: 30px;
+        top: 15px;
+    }
+    
+    #img-danarrativa .art-drawing {
+        width: 100px !important;
+    }
+    
+    .watermark {
+        opacity: 0.08;
+    }
+    
+    .post-icon img {
+        width: 60px;
+    }
+    
+    .text-end-marker img {
+        width: 45px;
+        height: 45px;
     }
 }
-
