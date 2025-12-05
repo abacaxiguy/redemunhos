@@ -20,7 +20,7 @@ body {
 .container {
     position: relative;
     z-index: 2;
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
     padding: 60px 40px;
     width: 100%;
@@ -116,6 +116,7 @@ body {
     display: flex;
     gap: 60px;
     z-index: 10;
+    width: max-content;
 }
 
 .main-nav a {
@@ -139,6 +140,7 @@ body {
     opacity: 0.3;
     transition: opacity 0.3s;
     rotate: 270deg;
+    z-index: 10;
 }
 
 .back-arrow img {
@@ -353,31 +355,7 @@ body {
     }
 }
 
-@media (max-width: 1200px) {
-    .container {
-        padding: 40px 30px;
-    }
-    
-    .definition {
-        padding: 0 80px;
-    }
-    
-    .art-drawing {
-        width: 300px;
-    }
-    
-    #img-telainicial .art-drawing {
-        width: 380px;
-    }
-    
-    #img-dalirica .art-drawing {
-        width: 280px;
-    }
-    
-    #img-danarrativa .art-drawing {
-        width: 230px;
-    }
-}
+
 
 @media (max-width: 992px) {
     .main-header h1 {
@@ -418,7 +396,7 @@ body {
     }
     
     #img-telainicial .art-drawing {
-        width: 320px;
+        width: 280px;
     }
     
     #img-dalirica {
@@ -448,13 +426,13 @@ body {
     }
     
     .main-header h1 {
-        font-size: 48px;
-        letter-spacing: 7px;
-        line-height: 1.2;
+        font-size: 32px;
+        letter-spacing: 6px;
+        line-height: 0.6;
     }
     
     .subtitle {
-        font-size: 18px;
+        font-size: 11px;
     }
     
     .main-nav {
@@ -484,7 +462,7 @@ body {
     }
     
     #img-telainicial .art-drawing {
-        width: 280px !important;
+        width: 240px !important;
     }
     
     #img-dalirica {
@@ -546,6 +524,11 @@ body {
         width: 36px;
         height: 36px;
     }
+
+    .watermark {
+        width: 170%;
+        height: 170%;
+    }
 }
 
 @media (max-width: 425px) {
@@ -558,13 +541,13 @@ body {
     }
     
     .main-header h1 {
-        font-size: 24px;
-        letter-spacing: 2px;
-        line-height: 0.5;
+        font-size: 30px;
+        letter-spacing: 5px;
+        line-height: 0.3;
     }
     
     .subtitle {
-        font-size: 16px;
+        font-size: 10px;
     }
     
     .main-nav {
@@ -594,7 +577,7 @@ body {
     }
     
     #img-telainicial .art-drawing {
-        width: 220px !important;
+        width: 130px !important;
     }
     
     #img-dalirica {
@@ -603,7 +586,7 @@ body {
     }
     
     #img-dalirica .art-drawing {
-        width: 170px !important;
+        width: 130px !important;
     }
     
     #img-danarrativa {
@@ -612,7 +595,7 @@ body {
     }
     
     #img-danarrativa .art-drawing {
-        width: 140px !important;
+        width: 100px !important;
     }
     
     .section-header h1 {
@@ -668,13 +651,13 @@ body {
     }
     
     .main-header h1 {
-        font-size: 32px;
-        letter-spacing: 4px;
-        line-height: 1.2;
+        font-size: 26px;
+        letter-spacing: 5px;
+        line-height: 0.3;
     }
     
     .subtitle {
-        font-size: 14px;
+        font-size: 9px;
     }
     
     .main-nav {
@@ -694,7 +677,7 @@ body {
     }
     
     .art-drawing {
-        width: 140px !important;
+        width: 100px !important;
         max-width: 100%;
     }
     
@@ -704,7 +687,7 @@ body {
     }
     
     #img-telainicial .art-drawing {
-        width: 130px !important;
+        width: 100px !important;
     }
     
     #img-dalirica {
