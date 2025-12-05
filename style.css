@@ -338,8 +338,9 @@ body {
         width: 260px;
     }
     
-    .section-header h1 {
+    :not(.homepage) .section-header h1 {
         font-size: 58px;
+        margin-left: 80px;
     }
     
     .definition {
@@ -367,8 +368,9 @@ body {
         font-size: 20px;
     }
     
-    .section-header h1 {
+    :not(.homepage) .section-header h1 {
         font-size: 52px;
+        margin-left: 60px;
     }
     
     .content-area {
@@ -433,6 +435,7 @@ body {
     
     .subtitle {
         font-size: 11px;
+        margin-left: -3px;
     }
     
     .main-nav {
@@ -483,10 +486,11 @@ body {
         width: 180px !important;
     }
     
-    .section-header h1 {
+    :not(.homepage) .section-header h1 {
         font-size: 44px;
         margin-bottom: 50px;
         margin-top: 60px;
+        margin-left: 20px;
     }
     
     .blog-post h1 {
@@ -598,7 +602,7 @@ body {
         width: 100px !important;
     }
     
-    .section-header h1 {
+    :not(.homepage) .section-header h1 {
         font-size: 36px;
         margin-bottom: 40px;
         margin-top: 50px;
@@ -708,7 +712,7 @@ body {
         width: 110px !important;
     }
     
-    .section-header h1 {
+    :not(.homepage) .section-header h1 {
         font-size: 32px;
         margin-bottom: 35px;
         margin-top: 40px;
