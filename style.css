@@ -9,7 +9,7 @@ a {
 }
 
 body {
-    font-family: 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Lora', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f5f5;
     color: #000;
     min-height: 100vh;
@@ -573,7 +573,7 @@ body {
     
     #img-telainicial {
         right: 15px;
-        top: 30px;
+        top: 50px;
     }
     
     #img-telainicial .art-drawing {
