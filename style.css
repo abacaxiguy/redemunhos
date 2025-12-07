@@ -247,17 +247,6 @@ body {
     height: auto;
 }
 
-.about-end-marker {
-    text-align: center;
-    margin-top: 60px;
-    margin-bottom: 40px;
-}
-
-.about-end-marker img {
-    width: 60px;
-    height: 60px;
-}
-
 .post-tags {
     font-family: "Lora", serif;
     text-align: justify;
@@ -287,13 +276,13 @@ body {
     margin-bottom: 10px;
 }
 
-.text-end-marker {
+.end-marker {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.text-end-marker img {
+.end-marker img {
     width: 130px;
     height: 130px;
 }
@@ -821,7 +810,7 @@ body {
         width: 60px;
     }
 
-    .text-end-marker img {
+    .end-marker img {
         width: 45px;
         height: 45px;
     }
