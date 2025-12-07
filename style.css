@@ -588,16 +588,16 @@ body {
     }
 
     #img-dalirica .art-drawing {
-        width: 130px !important;
+        width: 150px !important;
     }
 
     #img-danarrativa {
-        right: 50px;
-        top: 25px;
+        right: 30px;
+        top: 45px;
     }
 
     #img-danarrativa .art-drawing {
-        width: 70px !important;
+        width: 100px !important;
     }
 
     :not(.homepage) .section-header h1 {
