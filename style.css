@@ -9,7 +9,7 @@ a {
 }
 
 body {
-    font-family: 'Lora', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Lora", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f5f5;
     color: #000;
     min-height: 100vh;
@@ -283,136 +283,134 @@ body {
     .container {
         padding: 50px 35px;
     }
-    
+
     .main-header h1 {
         font-size: 64px;
         letter-spacing: 9px;
     }
-    
+
     .subtitle {
         font-size: 22px;
     }
-    
+
     .main-nav {
         gap: 50px;
         bottom: 22%;
     }
-    
+
     .main-nav a {
         font-size: 21px;
     }
-    
+
     .header-image {
         right: 60px;
         top: 40px;
     }
-    
+
     .art-drawing {
         width: 350px;
     }
-    
+
     #img-telainicial {
         right: 25px;
         top: 40px;
     }
-    
+
     #img-telainicial .art-drawing {
         width: 440px;
     }
-    
+
     #img-dalirica {
         right: 90px;
         top: 40px;
     }
-    
+
     #img-dalirica .art-drawing {
         width: 320px;
     }
-    
+
     #img-danarrativa {
         right: 140px;
         top: 30px;
     }
-    
+
     #img-danarrativa .art-drawing {
         width: 260px;
     }
-    
+
     :not(.homepage) .section-header h1 {
         font-size: 58px;
         margin-left: 80px;
     }
-    
+
     .definition {
         padding: 0 100px;
     }
-    
+
     .content-area {
         padding: 0 50px;
     }
-    
+
     .blog-post {
         padding: 0 50px;
     }
 }
-
-
 
 @media (max-width: 992px) {
     .main-header h1 {
         font-size: 56px;
         letter-spacing: 8px;
     }
-    
+
     .subtitle {
         font-size: 20px;
     }
-    
+
     :not(.homepage) .section-header h1 {
         font-size: 52px;
         margin-left: 60px;
     }
-    
+
     .content-area {
         padding: 0 40px;
     }
-    
+
     .definition {
         padding: 0 60px;
     }
-    
+
     .blog-post {
         padding: 0 40px;
     }
-    
+
     .header-image {
         right: 50px;
     }
-    
+
     .art-drawing {
         width: 260px;
     }
-    
+
     #img-telainicial {
         right: 25px;
     }
-    
+
     #img-telainicial .art-drawing {
         width: 280px;
     }
-    
+
     #img-dalirica {
         right: 70px;
     }
-    
+
     #img-dalirica .art-drawing {
         width: 240px;
     }
-    
+
     #img-danarrativa {
         right: 100px;
     }
-    
+
     #img-danarrativa .art-drawing {
         width: 200px;
     }
@@ -422,106 +420,106 @@ body {
     .container {
         padding: 40px 30px;
     }
-    
+
     .main-header {
         margin-top: 60px;
     }
-    
+
     .main-header h1 {
         font-size: 32px;
         letter-spacing: 6px;
         line-height: 0.6;
     }
-    
+
     .subtitle {
         font-size: 11px;
         margin-left: -3px;
     }
-    
+
     .main-nav {
         flex-direction: row;
         gap: 40px;
         bottom: 20%;
         align-items: center;
     }
-    
+
     .main-nav a {
         font-size: 20px;
     }
-    
+
     .header-image {
         right: 30px;
         top: 40px;
     }
-    
+
     .art-drawing {
         width: 240px !important;
         max-width: 100%;
     }
-    
+
     #img-telainicial {
         right: 20px;
         top: 40px;
     }
-    
+
     #img-telainicial .art-drawing {
         width: 240px !important;
     }
-    
+
     #img-dalirica {
         right: 50px;
         top: 40px;
     }
-    
+
     #img-dalirica .art-drawing {
         width: 220px !important;
     }
-    
+
     #img-danarrativa {
         right: 80px;
         top: 30px;
     }
-    
+
     #img-danarrativa .art-drawing {
         width: 180px !important;
     }
-    
+
     :not(.homepage) .section-header h1 {
         font-size: 44px;
         margin-bottom: 50px;
         margin-top: 60px;
         margin-left: 20px;
     }
-    
+
     .blog-post h1 {
         font-size: 32px;
         margin-bottom: 50px;
     }
-    
+
     .blog-post {
         padding: 0 30px;
         margin: 50px auto;
     }
-    
+
     .content-area {
         padding: 0 30px;
         margin: 50px auto;
     }
-    
+
     .definition {
         padding: 0 30px;
         font-size: 17px;
     }
-    
+
     .post-list {
         margin-top: 50px;
     }
-    
+
     .post-list a {
         font-size: 20px;
         margin-bottom: 20px;
     }
-    
+
     .back-arrow {
         top: 30px;
         left: 30px;
@@ -539,104 +537,104 @@ body {
     .container {
         padding: 30px 20px;
     }
-    
+
     .main-header {
         margin-top: 50px;
     }
-    
+
     .main-header h1 {
         font-size: 30px;
         letter-spacing: 5px;
         line-height: 0.3;
     }
-    
+
     .subtitle {
         font-size: 10px;
     }
-    
+
     .main-nav {
         flex-direction: row;
         gap: 30px;
-        bottom: 15%;
+        bottom: 22%;
         align-items: center;
     }
-    
+
     .main-nav a {
         font-size: 18px;
     }
-    
+
     .header-image {
         right: 20px;
         top: 30px;
     }
-    
+
     .art-drawing {
         width: 180px !important;
         max-width: 100%;
     }
-    
+
     #img-telainicial {
         right: 15px;
-        top: 50px;
+        top: 60px;
     }
-    
+
     #img-telainicial .art-drawing {
-        width: 130px !important;
+        width: 160px !important;
     }
-    
+
     #img-dalirica {
         right: 30px;
         top: 30px;
     }
-    
+
     #img-dalirica .art-drawing {
         width: 130px !important;
     }
-    
+
     #img-danarrativa {
         right: 50px;
         top: 25px;
     }
-    
+
     #img-danarrativa .art-drawing {
-        width: 100px !important;
+        width: 70px !important;
     }
-    
+
     :not(.homepage) .section-header h1 {
         font-size: 36px;
         margin-bottom: 40px;
         margin-top: 50px;
     }
-    
+
     .blog-post h1 {
         font-size: 28px;
         margin-bottom: 40px;
     }
-    
+
     .blog-post {
         padding: 0 20px;
         margin: 40px auto;
     }
-    
+
     .content-area {
         padding: 0 20px;
         margin: 40px auto;
     }
-    
+
     .definition {
         padding: 0 20px;
         font-size: 16px;
     }
-    
+
     .post-list {
         margin-top: 40px;
     }
-    
+
     .post-list a {
         font-size: 18px;
         margin-bottom: 15px;
     }
-    
+
     .back-arrow {
         top: 25px;
         left: 20px;
@@ -649,122 +647,123 @@ body {
     .container {
         padding: 25px 15px;
     }
-    
+
     .main-header {
         margin-top: 40px;
     }
-    
+
     .main-header h1 {
         font-size: 26px;
         letter-spacing: 5px;
         line-height: 0.3;
     }
-    
+
     .subtitle {
         font-size: 9px;
     }
-    
+
     .main-nav {
         flex-direction: row;
         gap: 25px;
-        bottom: 12%;
+        bottom: 20%;
         align-items: center;
     }
-    
+
     .main-nav a {
         font-size: 16px;
     }
-    
+
     .header-image {
         right: 10px;
         top: 25px;
     }
-    
+
     .art-drawing {
         width: 100px !important;
         max-width: 100%;
     }
-    
+
     #img-telainicial {
         right: 10px;
-        top: 25px;
+        top: 40px;
     }
-    
+
     #img-telainicial .art-drawing {
+        width: 140px !important;
+    }
+
+    #img-dalirica {
+        right: 70px;
+        top: 40px;
+    }
+
+    #img-dalirica .art-drawing {
         width: 100px !important;
     }
-    
-    #img-dalirica {
-        right: 20px;
-        top: 25px;
-    }
-    
-    #img-dalirica .art-drawing {
-        width: 130px !important;
-    }
-    
+
     #img-danarrativa {
         right: 35px;
         top: 20px;
     }
-    
+
     #img-danarrativa .art-drawing {
-        width: 110px !important;
+        width: 80px !important;
     }
-    
+
     :not(.homepage) .section-header h1 {
         font-size: 32px;
         margin-bottom: 35px;
         margin-top: 40px;
     }
-    
+
     .blog-post h1 {
         font-size: 24px;
         margin-bottom: 35px;
     }
-    
+
     .blog-post {
         padding: 0 15px;
         margin: 35px auto;
     }
-    
+
     .content-area {
         padding: 0 15px;
         margin: 35px auto;
     }
-    
+
     .definition {
         padding: 0 15px;
         font-size: 15px;
         line-height: 1.7;
     }
-    
+
     .post-list {
         margin-top: 35px;
     }
-    
+
     .post-list a {
         font-size: 16px;
         margin-bottom: 12px;
     }
-    
+
     .back-arrow {
         top: 20px;
         left: 15px;
         width: 28px;
         height: 28px;
     }
-    
-    .watermark {
-        opacity: 0.08;
-    }
-    
+
     .post-icon img {
         width: 60px;
     }
-    
+
     .text-end-marker img {
         width: 45px;
         height: 45px;
+    }
+
+    .watermark {
+        width: 175%;
+        height: 175%;
     }
 }
