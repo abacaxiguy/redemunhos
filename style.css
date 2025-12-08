@@ -97,7 +97,7 @@ body {
     font-size: 72px;
     font-weight: 400;
     margin-bottom: 5px;
-    letter-spacing: 10px;
+    letter-spacing: 12px;
     line-height: 49px;
     margin-left: -4px;
 }
@@ -256,12 +256,11 @@ body {
 }
 
 .post-icon {
-    text-align: center;
     margin: 60px 0;
 }
 
 .post-icon img {
-    width: 80px;
+    width: 100%;
     height: auto;
 }
 
@@ -303,6 +302,11 @@ body {
 .end-marker img {
     width: 130px;
     height: 130px;
+}
+
+#sobre .end-marker img {
+    width: 60px;
+    height: 60px;
 }
 
 .blog-post {
@@ -347,7 +351,6 @@ body {
 
     .main-header h1 {
         font-size: 64px;
-        letter-spacing: 9px;
     }
 
     .subtitle {
@@ -867,7 +870,7 @@ body {
     }
 
     .post-icon img {
-        width: 60px;
+        width: 100%;
     }
 
     .end-marker img {
