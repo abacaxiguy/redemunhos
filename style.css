@@ -446,6 +446,11 @@ body {
         margin-left: 60px;
     }
 
+    .title h1 {
+        font-size: 51px;
+        margin-left: 60px;
+    }
+
     .section-header-with-image h1 {
         margin-left: 60px;
         padding-right: 180px;
@@ -572,6 +577,11 @@ body {
         font-size: 44px;
         margin-bottom: 50px;
         margin-top: 60px;
+        margin-left: 20px;
+    }
+
+    .title h1 {
+        font-size: 31px;
         margin-left: 20px;
     }
 
@@ -711,7 +721,7 @@ body {
     }
 
     .title h1 {
-        font-size: 23px;
+        font-size: 20px;
         margin-bottom: 40px;
         margin-top: 50px;
         width: 100%;
