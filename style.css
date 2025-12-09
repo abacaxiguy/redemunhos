@@ -153,7 +153,8 @@ body {
     opacity: 0.7;
 }
 
-.section-header h1 {
+.section-header h1,
+.title h1 {
     font-size: 64px;
     font-weight: 400;
     margin-bottom: 60px;
@@ -276,6 +277,9 @@ body {
 .disclaimer {
     font-size: 14px;
     margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 }
 
 .credits {
@@ -624,6 +628,10 @@ body {
 }
 
 @media (max-width: 425px) {
+    .homepage {
+        overflow-y: hidden;
+    }
+    
     .container {
         padding: 30px 20px;
     }
@@ -735,8 +743,9 @@ body {
     }
 
     .post-list a {
-        font-size: 18px;
+        font-size: 10px;
         margin-bottom: 15px;
+        margin-left: 20px;
     }
 
     .back-arrow {
