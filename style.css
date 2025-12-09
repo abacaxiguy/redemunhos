@@ -32,7 +32,7 @@ body {
     left: 51.5%;
     transform: translate(-50%, -50%);
     z-index: 0;
-    opacity: 0.12;
+    opacity: 0.08;
     pointer-events: none;
     width: 90vw;
     max-width: 800px;
@@ -170,7 +170,7 @@ body {
 
 .header-float-img {
     position: absolute;
-    top: 80px;
+    top: -75px;
     right: 0;
     width: 200px;
     height: auto;
@@ -210,7 +210,7 @@ body {
     line-height: 1.8;
     margin-bottom: 40px;
     text-align: justify;
-    padding: 0 140px;
+    padding: 0 200px;
 }
 
 .definition strong {
@@ -293,7 +293,7 @@ body {
 
 .end-marker {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 60px;
     margin-bottom: 20px;
 }
 
@@ -573,7 +573,7 @@ body {
 
     .header-float-img {
         width: 140px;
-        top: 60px;
+        top: -60px;
     }
 
     .blog-post h1 {
@@ -691,9 +691,10 @@ body {
     }
 
     :not(.homepage) .section-header h1 {
-        font-size: 36px;
+        font-size: 23px;
         margin-bottom: 40px;
         margin-top: 50px;
+        width: 100%;
     }
 
     .section-header-with-image h1 {
@@ -702,7 +703,7 @@ body {
 
     .header-float-img {
         width: 110px;
-        top: 50px;
+        top: -50px;
     }
 
     .blog-post h1 {
@@ -713,6 +714,10 @@ body {
     .blog-post {
         padding: 0 20px;
         margin: 40px auto;
+    }
+
+    .blog-post p {
+        font-size: 15px;
     }
 
     .content-area {
@@ -744,6 +749,10 @@ body {
     .poem-quote {
         margin-left: 20px;
         margin-right: 20px;
+    }
+
+    .post-tags {
+        font-size: 16px;
     }
 }
 
@@ -815,7 +824,7 @@ body {
     }
 
     :not(.homepage) .section-header h1 {
-        font-size: 32px;
+        font-size: 21px;
         margin-bottom: 35px;
         margin-top: 40px;
     }
@@ -826,7 +835,7 @@ body {
 
     .header-float-img {
         width: 80px;
-        top: 40px;
+        top: -40px;
     }
 
     .blog-post h1 {
@@ -837,6 +846,10 @@ body {
     .blog-post {
         padding: 0 15px;
         margin: 35px auto;
+    }
+
+    .blog-post p {
+        font-size: 14px;
     }
 
     .content-area {
@@ -878,5 +891,9 @@ body {
     .watermark {
         width: 175%;
         height: 175%;
+    }
+
+    .post-tags {
+        font-size: 15px;
     }
 }
