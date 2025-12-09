@@ -755,9 +755,12 @@ body {
     }
 
     .post-list a {
-        font-size: 12px;
+        font-size: 15px;
+        word-wrap: break-word;
+        width: fit-content;
         margin-bottom: 15px;
         margin-left: 20px;
+        padding-right: 40px;
     }
 
     .back-arrow {
