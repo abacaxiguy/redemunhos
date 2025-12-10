@@ -236,7 +236,7 @@ body {
 
 .blog-post {
     max-width: 800px;
-    margin: 80px auto;
+    margin: 120px auto;
     padding: 0 60px;
 }
 
@@ -696,7 +696,7 @@ body {
     }
 
     #img-dalirica {
-        right: 30px;
+        right: 20px;
         top: 30px;
     }
 
@@ -710,7 +710,7 @@ body {
     }
 
     #img-danarrativa .art-drawing {
-        width: 100px !important;
+        width: 120px !important;
     }
 
     :not(.homepage) .section-header h1 {
@@ -743,7 +743,7 @@ body {
 
     .blog-post {
         padding: 0 20px;
-        margin: 40px auto;
+        margin: 70px auto;
     }
 
     .blog-post p {
@@ -885,7 +885,7 @@ body {
 
     .blog-post {
         padding: 0 15px;
-        margin: 35px auto;
+        margin: 45px auto;
     }
 
     .blog-post p {
