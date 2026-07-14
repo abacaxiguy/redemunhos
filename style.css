@@ -1,3 +1,10 @@
+@font-face {
+    font-family: "Caslon 540";
+    src: url("assets/fonts/Caslon 540 ITALIC/Caslon 540 ITALIC.ttf") format("truetype");
+    font-style: italic;
+    font-weight: 400;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -94,17 +101,19 @@ body {
 }
 
 .main-header h1 {
-    font-size: 72px;
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
+    font-size: 144px;
     font-weight: 400;
-    margin-bottom: 5px;
-    letter-spacing: 12px;
+    margin-bottom: 30px;
+    letter-spacing: -0.068em;
     line-height: 49px;
-    margin-left: -4px;
 }
 
 .subtitle {
     font-size: 24px;
     font-weight: 400;
+    margin-left: 8px;
     color: #000;
 }
 
@@ -114,17 +123,49 @@ body {
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 60px;
+    flex-direction: column;
     z-index: 10;
     width: max-content;
 }
 
+.links {
+    display: flex;
+    gap: 60px;
+    margin-top: 20px;
+}
+
+.floating-nav {
+    margin-bottom: 20px;
+}
+
+.homepage-link {
+    display: block;
+    margin-top: 40px;
+    max-width: 600px;
+}
+
+.homepage-link img {
+    width: 100%;
+    height: auto;
+}
+
+.links a,
 .main-nav a {
     color: #000;
     text-decoration: none;
     font-size: 22px;
     font-weight: 400;
     transition: opacity 0.3s;
+}
+
+#vozes-link {
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
+    letter-spacing: -0.068em;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
 }
 
 .main-nav a:hover {
@@ -155,10 +196,13 @@ body {
 
 .section-header h1,
 .title h1 {
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
     font-size: 64px;
     font-weight: 400;
     margin-bottom: 60px;
     margin-top: 80px;
+    letter-spacing: -0.068em;
 }
 
 .section-header-with-image {
@@ -241,10 +285,13 @@ body {
 }
 
 .blog-post h1 {
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
     font-size: 48px;
     font-weight: 400;
     margin-bottom: 60px;
     line-height: 1.3;
+    letter-spacing: -0.068em;
 }
 
 .blog-post p {
@@ -342,17 +389,29 @@ body {
     width: max-content;
 }
 
+.vozes-page {
+    overflow-y: hidden;
+    background-image: url("img/as-vozes-no-meio-do-redemunho.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 @media (max-width: 1280px) {
     .container {
         padding: 50px 35px;
     }
 
     .main-header h1 {
-        font-size: 64px;
+        font-size: 128px;
+    }
+
+    .vozes-link {
+        font-size: 44px;
     }
 
     .subtitle {
-        font-size: 22px;
+        font-size: 21px;
     }
 
     .main-nav {
@@ -434,8 +493,11 @@ body {
 
 @media (max-width: 992px) {
     .main-header h1 {
-        font-size: 56px;
-        letter-spacing: 8px;
+        font-size: 112px;
+    }
+
+    .vozes-link {
+        font-size: 36px;
     }
 
     .subtitle {
@@ -516,21 +578,43 @@ body {
     }
 
     .main-header h1 {
-        font-size: 32px;
-        letter-spacing: 6px;
+        font-size: 76px;
         line-height: 0.6;
+        margin-bottom: 10px;
     }
 
     .subtitle {
-        font-size: 11px;
-        margin-left: -3px;
+        font-size: 12.5px;
+        margin-left: 5px;
+    }
+
+    .homepage-link {
+        max-width: 100%;
+        margin-top: 30px;
+    }
+
+    .header-float-img {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto 30px;
+        display: block;
+    }
+
+    .section-header-with-image h1 {
+        padding-right: 0;
     }
 
     .main-nav {
-        flex-direction: row;
         gap: 40px;
         bottom: 20%;
         align-items: center;
+    }
+
+    .vozes-link {
+        font-size: 40px;
     }
 
     .main-nav a {
@@ -586,16 +670,6 @@ body {
         margin-left: 20px;
     }
 
-    .section-header-with-image h1 {
-        margin-left: 20px;
-        padding-right: 160px;
-    }
-
-    .header-float-img {
-        width: 140px;
-        top: -60px;
-    }
-
     .blog-post h1 {
         font-size: 32px;
         margin-bottom: 50px;
@@ -643,9 +717,9 @@ body {
     }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 430px) {
     .homepage {
-        overflow-y: hidden;
+        overflow-y: visible;
     }
     
     .container {
@@ -657,20 +731,29 @@ body {
     }
 
     .main-header h1 {
-        font-size: 30px;
-        letter-spacing: 4.9px;
+        font-size: 60px;
         line-height: 0.3;
+        margin-bottom: 14px;
     }
 
     .subtitle {
         font-size: 10px;
+        margin-left: 4px;
+    }
+
+    .homepage-link {
+        max-width: 100%;
+        margin-top: 25px;
     }
 
     .main-nav {
-        flex-direction: row;
         gap: 30px;
         bottom: 22%;
         align-items: center;
+    }
+
+    #vozes-link {
+        font-size: 36px;
     }
 
     .main-nav a {
@@ -689,7 +772,7 @@ body {
 
     #img-telainicial {
         right: 14px;
-        top: 52px;
+        top: 84px;
     }
 
     #img-telainicial .art-drawing {
@@ -801,17 +884,26 @@ body {
     }
 
     .main-header h1 {
-        font-size: 26px;
-        letter-spacing: 5px;
+        font-size: 52px;
         line-height: 0.3;
+        margin-bottom: 10px;
     }
 
     .subtitle {
-        font-size: 9px;
+        font-size: 8.5px;
+        margin-left: 2.5px;
+    }
+
+    .homepage-link {
+        max-width: 100%;
+        margin-top: 20px;
+    }
+
+    #vozes-link {
+        font-size: 28px;
     }
 
     .main-nav {
-        flex-direction: row;
         gap: 25px;
         bottom: 20%;
         align-items: center;
@@ -826,6 +918,10 @@ body {
         top: 25px;
     }
 
+    .links {
+        gap: 40px;
+    }
+
     .art-drawing {
         width: 100px !important;
         max-width: 100%;
@@ -833,7 +929,7 @@ body {
 
     #img-telainicial {
         right: 10px;
-        top: 40px;
+        top: 70px;
     }
 
     #img-telainicial .art-drawing {
