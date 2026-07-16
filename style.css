@@ -519,7 +519,7 @@ body {
     }
 
     .title h1 {
-        font-size: 51px;
+        font-size: 52px;
         margin-left: 60px;
     }
 
@@ -675,7 +675,7 @@ body {
     }
 
     .title h1 {
-        font-size: 31px;
+        font-size: 44px;
         margin-left: 20px;
     }
 
@@ -807,14 +807,14 @@ body {
     }
 
     :not(.homepage) .section-header h1 {
-        font-size: 36px;
+        font-size: 48px;
         margin-bottom: 40px;
         margin-top: 50px;
         width: 100%;
     }
 
     .title h1 {
-        font-size: 20px;
+        font-size: 48px;
         margin-bottom: 40px;
         margin-top: 50px;
         width: 100%;
@@ -964,13 +964,13 @@ body {
     }
 
     :not(.homepage) .section-header h1 {
-        font-size: 32px;
+        font-size: 40px;
         margin-bottom: 35px;
         margin-top: 40px;
     }
 
     .title h1 {
-        font-size: 19px;
+        font-size: 40px;
         margin-bottom: 35px;
         margin-top: 40px;
     }
