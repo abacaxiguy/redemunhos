@@ -596,6 +596,7 @@ body {
         font-size: 12.5px;
         margin-left: 5px;
         margin-top: 3px;
+        background-color: blue;
     }
 
     .homepage-link {
@@ -748,7 +749,8 @@ body {
     .subtitle {
         font-size: 10px;
         margin-left: 4px;
-        margin-top: 12px;
+        margin-top: 3px;
+        background-color: green;
     }
 
     .homepage-link {
