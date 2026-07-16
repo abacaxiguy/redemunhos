@@ -596,7 +596,6 @@ body {
         font-size: 12.5px;
         margin-left: 5px;
         margin-top: 3px;
-        background-color: blue;
     }
 
     .homepage-link {
@@ -750,7 +749,6 @@ body {
         font-size: 10px;
         margin-left: 4px;
         margin-top: 3px;
-        background-color: green;
     }
 
     .homepage-link {
@@ -784,11 +782,11 @@ body {
 
     #img-telainicial {
         right: 5px;
-        top: 72px;
+        top: 54px;
     }
 
     #img-telainicial .art-drawing {
-        width: 205px !important;
+        width: 232px !important;
     }
 
     #img-dalirica {
@@ -905,7 +903,6 @@ body {
         font-size: 8.5px;
         margin-left: 4.5px;
         margin-top: 5px;
-        background-color: red;
     }
 
     .homepage-link {
