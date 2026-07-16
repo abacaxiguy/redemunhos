@@ -397,6 +397,14 @@ body {
     background-repeat: no-repeat;
 }
 
+/* body:not(.vozes-page) {
+    background-image: url("img/watermark.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+} */
+
 @media (max-width: 1280px) {
     .container {
         padding: 50px 35px;
@@ -494,6 +502,7 @@ body {
 @media (max-width: 992px) {
     .main-header h1 {
         font-size: 112px;
+        margin-bottom: 20px;
     }
 
     .vozes-link {
@@ -580,7 +589,7 @@ body {
     .main-header h1 {
         font-size: 76px;
         line-height: 0.6;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
     }
 
     .subtitle {
