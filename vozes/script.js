@@ -211,24 +211,52 @@ class HotspotManager {
     }
 
     render() {
-        const imgSrc = document.getElementById("vozes-image").getAttribute("src");
+        const imgEl = document.getElementById("vozes-image");
+        const imgSrc = imgEl.getAttribute("src");
+        const wrap = this.container.parentElement;
+        const wrapRect = wrap.getBoundingClientRect();
+        const wrapW = wrapRect.width;
+        const wrapH = wrapRect.height;
+
+        const expand = 1.25;
 
         HOTSPOTS.forEach((h) => {
             const div = document.createElement("div");
             div.className = "hotspot";
             div.dataset.id = h.id;
-            div.style.left = h.left + "%";
-            div.style.top = h.top + "%";
-            div.style.width = h.width + "%";
-            div.style.height = h.height + "%";
 
-            // Passa background-image para o ::before via CSS custom properties
-            const bgW = (100 / h.width) * 100;
-            const bgH = (100 / h.height) * 100;
-            div.style.setProperty("--bg-img", "url(" + imgSrc + ")");
-            div.style.setProperty("--bg-size", bgW + "% " + bgH + "%");
-            div.style.setProperty("--bg-pos", (-h.left / h.width) * 100 + "% " + (-h.top / h.height) * 100 + "%");
+            // Expande o tamanho mantendo o centro na posição original.
+            // O clone da imagem não muda — o que muda é só a "poça de luz"
+            // (máscara radial), que fica maior e revela mais do entorno.
+            const newW = h.width * expand;
+            const newH = h.height * expand;
+            const dx = (h.width * (expand - 1)) / 2;
+            const dy = (h.height * (expand - 1)) / 2;
 
+            div.style.left = (h.left - dx) + "%";
+            div.style.top = (h.top - dy) + "%";
+            div.style.width = newW + "%";
+            div.style.height = newH + "%";
+
+            // Offsets em px para alinhar o clone com o original
+            const offsetX = -(h.left / 100) * wrapW;
+            const offsetY = -(h.top / 100) * wrapH;
+            div.style.setProperty("--noise-x", offsetX + "px");
+            div.style.setProperty("--noise-y", offsetY + "px");
+            div.style.setProperty("--clone-w", wrapW + "px");
+
+            // Clone da imagem (do mesmo tamanho do container original,
+            // deslocado para mostrar a porção correspondente ao hotspot)
+            const clone = document.createElement("img");
+            clone.className = "hotspot-clone";
+            clone.src = imgSrc;
+            clone.alt = "";
+            clone.draggable = false;
+            clone.style.left = offsetX + "px";
+            clone.style.top = offsetY + "px";
+            clone.style.width = wrapW + "px";
+
+            div.appendChild(clone);
             this.container.appendChild(div);
 
             this.hotspots.push({ id: h.id, el: div });

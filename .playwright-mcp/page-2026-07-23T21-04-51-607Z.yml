@@ -1,0 +1,17 @@
+- generic [active] [ref=e1]:
+  - link [ref=e2] [cursor=pointer]:
+    - /url: /
+    - img "Back" [ref=e3]
+  - main [ref=e4]:
+    - img "As vozes no meio do redemunho" [ref=e6]
+    - generic [ref=e21]:
+      - button "Play/Pause" [ref=e22] [cursor=pointer]:
+        - generic: 
+      - generic [ref=e25]: 0:00
+      - button "Fechar" [ref=e26]:
+        - generic [ref=e27]: 
+    - generic [ref=e28]:
+      - heading "as vozes no meio do redemunho" [level=2] [ref=e29]
+      - paragraph [ref=e30]: um percurso guiado pela obra
+      - generic [ref=e31]: Seu navegador não suporta vídeo HTML5.
+      - paragraph [ref=e33]: Clique nas figuras para ouvir suas vozes. Cada elipse guarda uma fala do redemunho.

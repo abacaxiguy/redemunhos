@@ -449,43 +449,135 @@ body {
     z-index: 3;
 }
 
-/* Filtro do highlight esfumaçado: troca entre a variante padrão e a
-   variante leve (telas pequenas) por meio de uma custom property, sem
-   precisar duplicar a regra .hotspot inteira. Definições dos filtros
-   SVG estão em vozes/index.html (<svg width="0" height="0">). */
+/* ============================================================
+   HOTSPOT - MANCHA DE LUZ ORGÂNICA (Organic Blob Spotlight)
+   ------------------------------------------------------------
+   Sem elipse perfeita. Forma irregular via border-radius 8-value
+   que MORFA entre configs diferentes + leve scale. Bordas
+   esfumaçadas pelo mask-image radial (fade longo). Ruído
+   sutil com mix-blend-mode soft-light.
+   ============================================================ */
+
 .hotspot {
     position: absolute;
     cursor: pointer;
-    z-index: 1;
+    overflow: hidden;
+    background: transparent;
+    /* Forma orgânica inicial — será animada por morphing-light */
+    border-radius: 47% 53% 38% 62% / 52% 41% 59% 48%;
+    /* Mask radial: centro opaco, fade longo até sumir */
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 4%,
+        rgba(0, 0, 0, 0.95) 30%,
+        rgba(0, 0, 0, 0.4) 65%,
+        rgba(0, 0, 0, 0) 88%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 4%,
+        rgba(0, 0, 0, 0.95) 30%,
+        rgba(0, 0, 0, 0.4) 65%,
+        rgba(0, 0, 0, 0) 88%
+    );
     opacity: 0;
-    transition: opacity 0.9s ease;
-    --smoke-filter: url(#smoke-edge);
+    transition: opacity 0.6s ease;
+    transform-origin: center center;
+    will-change: transform, border-radius;
 }
 
-.hotspot::before {
+/* Imagem clonada (alinhada por JS via top/left em pixels).
+   Herda o border-radius do pai para acompanhar a forma orgânica. */
+.hotspot-clone {
+    position: absolute;
+    top: var(--noise-y, 0px);
+    left: var(--noise-x, 0px);
+    width: var(--clone-w, 100%);
+    height: auto;
+    pointer-events: none;
+    border-radius: inherit;
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 4%,
+        rgba(0, 0, 0, 0.95) 30%,
+        rgba(0, 0, 0, 0.4) 65%,
+        rgba(0, 0, 0, 0) 88%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 4%,
+        rgba(0, 0, 0, 0.95) 30%,
+        rgba(0, 0, 0, 0.4) 65%,
+        rgba(0, 0, 0, 0) 88%
+    );
+}
+
+/* Camada de ruído sutil (textura/areia da luz) */
+.hotspot::after {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: var(--bg-img);
-    background-size: var(--bg-size);
-    background-position: var(--bg-pos);
-    background-repeat: no-repeat;
-    filter: var(--smoke-filter);
+    background-image: url("/img/noise-texture.png");
+    background-size: 200px 200px;
+    background-repeat: repeat;
+    background-position: var(--noise-x, 0px) var(--noise-y, 0px);
+    mix-blend-mode: soft-light;
+    opacity: 0;
     pointer-events: none;
+    border-radius: inherit;
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 0.7) 55%,
+        rgba(0, 0, 0, 0) 92%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 0.7) 55%,
+        rgba(0, 0, 0, 0) 92%
+    );
+    transition: opacity 0.6s ease;
 }
 
+/* Hover: acende a mancha e inicia a respiração orgânica */
 .hotspot:hover {
-    opacity: 0.5;
+    opacity: 1;
+    animation: morphing-light 4.8s ease-in-out infinite alternate;
 }
 
-/* Ativo (após clique): acende totalmente */
+.hotspot:hover::after {
+    opacity: 0.32;
+}
+
+/* Ativo (após clique): igual ao hover, com ruído levemente mais visível */
 .hotspot.is-active {
     opacity: 1;
+    animation: morphing-light 4.8s ease-in-out infinite alternate;
 }
 
-@media (max-width: 600px) {
-    .hotspot {
-        --smoke-filter: url(#smoke-edge-sm);
+.hotspot.is-active::after {
+    opacity: 0.42;
+}
+
+/* Respiração orgânica: morfa border-radius 8-value + leve scale.
+   4 keyframes + alternate = transição contínua sem "pulo". */
+@keyframes morphing-light {
+    0% {
+        border-radius: 47% 53% 38% 62% / 52% 41% 59% 48%;
+        transform: scale(1);
+    }
+    33% {
+        border-radius: 58% 42% 65% 35% / 44% 56% 47% 53%;
+        transform: scale(1.025);
+    }
+    66% {
+        border-radius: 38% 62% 50% 50% / 60% 40% 65% 35%;
+        transform: scale(0.982);
+    }
+    100% {
+        border-radius: 51% 49% 60% 40% / 45% 55% 41% 59%;
+        transform: scale(1.015);
     }
 }
 
