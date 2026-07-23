@@ -7,13 +7,121 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
         <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon/favicon-16x16.png" />
         <link rel="manifest" href="../img/favicon/site.webmanifest" />
         <link rel="stylesheet" href="../style.css" />
     </head>
-    <body class="vozes-page">
+    <body class="vozes-interactive">
+        <!--
+            Filtros SVG do highlight "esfumaçado" dos hotspots.
+            Não é renderizado (width/height = 0): serve apenas como
+            definição, referenciada via `filter: url(#smoke-edge)` no CSS.
+            Ver comentários detalhados em style.css, seção .hotspot.
+        -->
+        <svg width="0" height="0" style="position: absolute; overflow: hidden" aria-hidden="true" focusable="false">
+            <defs>
+                <!-- Variante padrão (desktop / hotspots grandes) -->
+                <filter id="smoke-edge" x="-45%" y="-45%" width="190%" height="190%" color-interpolation-filters="sRGB">
+                    <!-- 1. Suaviza o retângulo do hotspot num "borrão" arredondado -->
+                    <    in="SourceAlpha" stdDeviation="9" result="blurredAlpha" />
+                    <feComponentTransfer in="blurredAlpha" result="coreAlpha">
+                        <feFuncA type="linear" slope="5" intercept="-1.4" />
+                    </feComponentTransfer>
+
+                    <!-- 2. Ruído fractal grande: deforma o contorno em silhueta irregular -->
+                    <feTurbulence type="fractalNoise" baseFrequency="0.015 0.02" numOctaves="3" seed="11" stitchTiles="stitch" result="warpNoise">
+                        <animate attributeName="baseFrequency" values="0.013 0.018;0.02 0.012;0.013 0.018" dur="19s" repeatCount="indefinite" />
+                    </feTurbulence>
+                    <feDisplacementMap in="coreAlpha" in2="warpNoise" scale="34" xChannelSelector="R" yChannelSelector="G" result="warped" />
+
+                    <!-- 3. Ruído fino: esfarela a borda em fiapos de fumaça -->
+                    <feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="2" seed="4" result="wisp" />
+                    <feColorMatrix
+                        in="wisp"
+                        type="matrix"
+                        values="0 0 0 0 0
+                                0 0 0 0 0
+                                0 0 0 0 0
+                                0.5 0.5 0.5 0 -0.1"
+                        result="wispAlpha"
+                    />
+                    <feComposite in="warped" in2="wispAlpha" operator="arithmetic" k1="0" k2="0.75" k3="0.4" k4="-0.12" result="smokyAlpha" />
+                    <feGaussianBlur in="smokyAlpha" stdDeviation="1" result="finalAlpha" />
+
+                    <!-- 4. Recorta a imagem original usando essa máscara esfumaçada -->
+                    <feComposite in="SourceGraphic" in2="finalAlpha" operator="in" />
+                </filter>
+
+                <!-- Variante leve, usada em telas pequenas (hotspots pequenos perdem menos definição) -->
+                <filter id="smoke-edge-sm" x="-55%" y="-55%" width="210%" height="210%" color-interpolation-filters="sRGB">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="4.5" result="blurredAlpha" />
+                    <feComponentTransfer in="blurredAlpha" result="coreAlpha">
+                        <feFuncA type="linear" slope="5" intercept="-1.4" />
+                    </feComponentTransfer>
+                    <feTurbulence type="fractalNoise" baseFrequency="0.035 0.045" numOctaves="3" seed="11" stitchTiles="stitch" result="warpNoise">
+                        <animate attributeName="baseFrequency" values="0.03 0.04;0.045 0.028;0.03 0.04" dur="19s" repeatCount="indefinite" />
+                    </feTurbulence>
+                    <feDisplacementMap in="coreAlpha" in2="warpNoise" scale="16" xChannelSelector="R" yChannelSelector="G" result="warped" />
+                    <feTurbulence type="fractalNoise" baseFrequency="0.14" numOctaves="2" seed="4" result="wisp" />
+                    <feColorMatrix
+                        in="wisp"
+                        type="matrix"
+                        values="0 0 0 0 0
+                                0 0 0 0 0
+                                0 0 0 0 0
+                                0.5 0.5 0.5 0 -0.1"
+                        result="wispAlpha"
+                    />
+                    <feComposite in="warped" in2="wispAlpha" operator="arithmetic" k1="0" k2="0.75" k3="0.4" k4="-0.12" result="smokyAlpha" />
+                    <feGaussianBlur in="smokyAlpha" stdDeviation="0.6" result="finalAlpha" />
+                    <feComposite in="SourceGraphic" in2="finalAlpha" operator="in" />
+                </filter>
+            </defs>
+        </svg>
+    <body class="vozes-interactive">
+
         <a href="/" class="back-arrow"><img src="../img/back.png" alt="Back" /></a>
+
+        <main class="vozes-stage">
+            <div class="vozes-image-wrap" id="vozes-image-wrap">
+                <img
+                    src="../img/mapa.png"
+                    alt="As vozes no meio do redemunho"
+                    class="vozes-image"
+                    id="vozes-image"
+                />
+
+                <div class="vozes-darken" id="vozes-darken"></div>
+                <div class="vozes-hotspots" id="vozes-hotspots"></div>
+            </div>
+
+            <div class="player-host" id="player-host"></div>
+
+            <section class="vozes-end">
+                <h2 class="vozes-end-title">as vozes no meio do redemunho</h2>
+                <p class="vozes-end-sub">um percurso guiado pela obra</p>
+
+                <div class="vozes-video-frame">
+                    <video
+                        class="vozes-video"
+                        id="vozes-video"
+                        controls
+                        preload="metadata"
+                    >
+                        <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4" />
+                        Seu navegador não suporta vídeo HTML5.
+                    </video>
+                </div>
+
+                <p class="vozes-end-caption">
+                    Clique nas figuras para ouvir suas vozes. Cada elipse guarda uma fala do redemunho.
+                </p>
+            </section>
+        </main>
+
+        <script src="script.js"></script>
     </body>
 </html>
