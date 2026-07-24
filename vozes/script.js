@@ -136,6 +136,8 @@ class AudioPlayer {
         this._position(refEl);
         this.element.classList.add("is-open");
         this.isOpen = true;
+        // Ao clicar na figura, já inicia o áudio
+        this.toggle();
     }
 
     close() {
@@ -185,16 +187,16 @@ class AudioPlayer {
         const cur = this.audio.currentTime;
         const pct = (cur / dur) * 100;
         this.fill.style.width = pct + "%";
-        this.time.textContent = formatTime(cur);
+        this.time.textContent = formatTime(dur - cur);
     }
 
     _position(refEl) {
         const rect = refEl.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
+        const cy = rect.bottom + 12;
         this.element.style.left = Math.round(cx) + "px";
         this.element.style.top = Math.round(cy) + "px";
-        this.element.style.transform = "translate(-50%, -50%) scale(1)";
+        this.element.style.transform = "translate(-50%, 0)";
     }
 }
 
@@ -219,15 +221,13 @@ class HotspotManager {
         const wrapH = wrapRect.height;
 
         const expand = 1.25;
+        const MIRAGE_OFFSET = 5;
 
         HOTSPOTS.forEach((h) => {
             const div = document.createElement("div");
             div.className = "hotspot";
             div.dataset.id = h.id;
 
-            // Expande o tamanho mantendo o centro na posição original.
-            // O clone da imagem não muda — o que muda é só a "poça de luz"
-            // (máscara radial), que fica maior e revela mais do entorno.
             const newW = h.width * expand;
             const newH = h.height * expand;
             const dx = (h.width * (expand - 1)) / 2;
@@ -238,15 +238,22 @@ class HotspotManager {
             div.style.width = newW + "%";
             div.style.height = newH + "%";
 
-            // Offsets em px para alinhar o clone com o original
-            const offsetX = -(h.left / 100) * wrapW;
-            const offsetY = -(h.top / 100) * wrapH;
+            const offsetX = -((h.left - dx) / 100) * wrapW;
+            const offsetY = -((h.top - dy) / 100) * wrapH;
             div.style.setProperty("--noise-x", offsetX + "px");
             div.style.setProperty("--noise-y", offsetY + "px");
             div.style.setProperty("--clone-w", wrapW + "px");
 
-            // Clone da imagem (do mesmo tamanho do container original,
-            // deslocado para mostrar a porção correspondente ao hotspot)
+            const mirage = document.createElement("img");
+            mirage.className = "hotspot-mirage";
+            mirage.src = imgSrc;
+            mirage.alt = "";
+            mirage.draggable = false;
+            mirage.style.left = (offsetX + MIRAGE_OFFSET) + "px";
+            mirage.style.top = (offsetY + MIRAGE_OFFSET) + "px";
+            mirage.style.width = wrapW + "px";
+            div.appendChild(mirage);
+
             const clone = document.createElement("img");
             clone.className = "hotspot-clone";
             clone.src = imgSrc;
@@ -255,12 +262,24 @@ class HotspotManager {
             clone.style.left = offsetX + "px";
             clone.style.top = offsetY + "px";
             clone.style.width = wrapW + "px";
-
             div.appendChild(clone);
-            this.container.appendChild(div);
 
+            this.container.appendChild(div);
             this.hotspots.push({ id: h.id, el: div });
 
+            // Hover: ativa o hotspot visual + darken (igual ao click)
+            div.addEventListener("mouseenter", () => {
+                this.darkenEl.classList.add("is-visible");
+                div.classList.add("is-hovered");
+            });
+            div.addEventListener("mouseleave", () => {
+                if (this.activeId !== h.id) {
+                    this.darkenEl.classList.remove("is-visible");
+                }
+                div.classList.remove("is-hovered");
+            });
+
+            // Click: ativa o player e inicia o áudio
             div.addEventListener("click", () => this._onClick(h.id));
         });
     }

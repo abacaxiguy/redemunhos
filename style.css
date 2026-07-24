@@ -409,9 +409,10 @@ body {
     width: 100%;
 }
 
-/* Container da imagem + hotspots */
+/* Container da imagem + hotspots — fica acima do darken global */
 .vozes-image-wrap {
     position: relative;
+    z-index: 3;
     width: 100%;
     user-select: none;
     -webkit-user-select: none;
@@ -423,13 +424,13 @@ body {
     height: auto;
 }
 
-/* Camada que escurece a imagem toda */
+/* Escuridão global — cobre a viewport inteira */
 .vozes-darken {
-    position: absolute;
+    position: fixed;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.78);
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.58);
     pointer-events: none;
     opacity: 0;
     transition: opacity 1.2s ease;
@@ -486,8 +487,8 @@ body {
     will-change: transform, border-radius;
 }
 
-/* Imagem clonada (alinhada por JS via top/left em pixels).
-   Herda o border-radius do pai para acompanhar a forma orgânica. */
+/* Imagem clonada — o "foco" da luz no lugar correto.
+   Opacidade alta: é o que vemos brilhar dentro da mancha. */
 .hotspot-clone {
     position: absolute;
     top: var(--noise-y, 0px);
@@ -496,6 +497,7 @@ body {
     height: auto;
     pointer-events: none;
     border-radius: inherit;
+    opacity: 0.85;
     -webkit-mask-image: radial-gradient(
         ellipse at center,
         rgba(0, 0, 0, 1) 4%,
@@ -510,6 +512,29 @@ body {
         rgba(0, 0, 0, 0.4) 65%,
         rgba(0, 0, 0, 0) 88%
     );
+}
+
+/* Miragem — imagem fantasma levemente deslocada, opacidade bem baixa.
+   Cria um efeito de "ondulação" ou reverberação da luz. */
+.hotspot-mirage {
+    position: absolute;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0.18;
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 0.4) 55%,
+        rgba(0, 0, 0, 0) 90%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 0.4) 55%,
+        rgba(0, 0, 0, 0) 90%
+    );
+    filter: blur(3px);
+    z-index: -1;
 }
 
 /* Camada de ruído sutil (textura/areia da luz) */
@@ -538,6 +563,7 @@ body {
         rgba(0, 0, 0, 0) 92%
     );
     transition: opacity 0.6s ease;
+    z-index: 1;
 }
 
 /* Hover: acende a mancha e inicia a respiração orgânica */
@@ -596,48 +622,69 @@ body {
     position: absolute;
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
-    background: rgba(20, 20, 20, 0.92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    gap: 8px;
+    padding: 4px 0;
+    background: none;
+    border: none;
+    box-shadow: none;
     pointer-events: auto;
     opacity: 0;
-    transform: scale(0.85) translateY(6px);
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: opacity 0.3s ease;
     white-space: nowrap;
+    z-index: 1000000;
 }
 
 .custom-player.is-open {
     opacity: 1;
-    transform: scale(1) translateY(0);
 }
 
-/* Botão Play/Pause */
+/* Botão Play/Pause — só o seco, sem fundo */
 .player-btn {
     flex-shrink: 0;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border: none;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-size: 13px;
+    background: none;
+    color: #000;
+    font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.2s;
+    opacity: 0.7;
+    transition: opacity 0.2s;
 }
 
 .player-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    opacity: 1;
 }
 
 .player-btn i {
+    pointer-events: none;
+}
+
+/* Botão fechar — só o seco */
+.player-close {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: none;
+    color: #000;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+}
+
+.player-close:hover {
+    opacity: 1;
+}
+
+.player-close i {
     pointer-events: none;
 }
 
@@ -646,49 +693,48 @@ body {
     position: relative;
     flex: 1;
     min-width: 100px;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 3px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
     cursor: pointer;
 }
 
 .player-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #f0c060, #e8a030);
-    border-radius: 3px;
+    background: #000;
+    border-radius: 2px;
     transition: width 0.1s linear;
     position: relative;
 }
 
 .player-thumb {
     position: absolute;
-    right: -7px;
+    right: -6px;
     top: 50%;
     transform: translateY(-50%);
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: #f0c060;
-    border: 2px solid #1a1a1a;
-    box-shadow: 0 0 6px rgba(240, 192, 96, 0.5);
+    background: #000;
     cursor: grab;
     transition: box-shadow 0.2s;
 }
 
 .player-thumb:active {
     cursor: grabbing;
-    box-shadow: 0 0 12px rgba(240, 192, 96, 0.8);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Tempo */
 .player-time {
-    color: rgba(255, 255, 255, 0.6);
+    color: #000;
     font-size: 11px;
     font-family: "Courier New", monospace;
     min-width: 36px;
     text-align: right;
     flex-shrink: 0;
+    opacity: 0.6;
 }
 
 /* =============================================
@@ -769,8 +815,7 @@ body {
     }
 
     .custom-player {
-        padding: 8px 12px;
-        gap: 8px;
+        gap: 6px;
     }
 
     .player-track {
@@ -778,9 +823,9 @@ body {
     }
 
     .player-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 11px;
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
     }
 }
 
@@ -800,6 +845,12 @@ body {
     .player-time {
         font-size: 10px;
         min-width: 30px;
+    }
+
+    .player-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
     }
 }
 
