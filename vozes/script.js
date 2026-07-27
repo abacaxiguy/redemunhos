@@ -191,9 +191,24 @@ class AudioPlayer {
     }
 
     _position(refEl) {
-        const rect = refEl.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.bottom + 12;
+        // Usa a geometria estática (left/top/width/height em %, gravados
+        // no render()) em vez de getBoundingClientRect(refEl): o hotspot
+        // pode estar no meio da animação de hover/active (transform: scale),
+        // e isso deixaria a posição ligeiramente diferente a cada clique.
+        const wrap = document.getElementById("vozes-image-wrap");
+        const wrapRect = wrap.getBoundingClientRect();
+        const leftPct = parseFloat(refEl.style.left) / 100;
+        const topPct = parseFloat(refEl.style.top) / 100;
+        const widthPct = parseFloat(refEl.style.width) / 100;
+        const heightPct = parseFloat(refEl.style.height) / 100;
+
+        const boxLeft = wrapRect.left + leftPct * wrapRect.width;
+        const boxTop = wrapRect.top + topPct * wrapRect.height;
+        const boxWidth = widthPct * wrapRect.width;
+        const boxHeight = heightPct * wrapRect.height;
+
+        const cx = boxLeft + window.scrollX + boxWidth / 2;
+        const cy = boxTop + boxHeight + window.scrollY + 12;
         this.element.style.left = Math.round(cx) + "px";
         this.element.style.top = Math.round(cy) + "px";
         this.element.style.transform = "translate(-50%, 0)";

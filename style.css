@@ -405,8 +405,25 @@ body {
     overflow-y: auto;
 }
 
+.vozes-title {
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.068em;
+    font-size: 64px;
+    text-align: center;
+    margin: 0 auto 10px;
+    /* padding, não margin: margin-top colapsaria com a margem do body
+       e empurraria o <body> inteiro para baixo, arrastando o back-arrow
+       (position:absolute relativo ao body) junto com o título. */
+    padding-top: 110px;
+}
+
 .vozes-stage {
     width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 24px;
 }
 
 /* Container da imagem + hotspots — fica acima do darken global */
@@ -611,10 +628,10 @@ body {
    PLAYER DE ÁUDIO CUSTOMIZADO
    ============================================= */
 
+/* Sem position:fixed aqui — os filhos são posicionados em coordenadas de
+   documento (ver script.js), então ancoram no <body> (position:relative)
+   e rolam junto com a página, permanecendo onde foram abertos. */
 .player-host {
-    position: fixed;
-    inset: 0;
-    z-index: 100;
     pointer-events: none;
 }
 
@@ -622,11 +639,19 @@ body {
     position: absolute;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 4px 0;
-    background: none;
+    gap: 6px;
+    padding: 7px 14px;
+    /* Recorte de uma área lisa (sem tinta) do próprio mapa.png como
+       textura — cor de base é a média amostrada dessa mesma área, para
+       servir de fallback enquanto a imagem carrega. */
+    background-color: rgb(230, 195, 130);
+    background-image: url("img/mapa.png");
+    background-position: -400px -480px;
+    background-size: 2524px auto;
+    background-repeat: no-repeat;
+    border-radius: 999px;
     border: none;
-    box-shadow: none;
+    /* box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35); */
     pointer-events: auto;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -635,23 +660,23 @@ body {
 }
 
 .custom-player.is-open {
-    opacity: 1;
+    opacity: 0.65;
 }
 
-/* Botão Play/Pause — só o seco, sem fundo */
+/* Botão Play/Pause */
 .player-btn {
     flex-shrink: 0;
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border: none;
     background: none;
-    color: #000;
-    font-size: 14px;
+    color: #2a1f14;
+    font-size: 13px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.7;
+    opacity: 0.85;
     transition: opacity 0.2s;
 }
 
@@ -663,20 +688,20 @@ body {
     pointer-events: none;
 }
 
-/* Botão fechar — só o seco */
+/* Botão fechar */
 .player-close {
     flex-shrink: 0;
     width: 22px;
     height: 22px;
     border: none;
     background: none;
-    color: #000;
+    color: #2a1f14;
     font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.5;
+    opacity: 0.55;
     transition: opacity 0.2s;
 }
 
@@ -692,9 +717,9 @@ body {
 .player-track {
     position: relative;
     flex: 1;
-    min-width: 100px;
+    min-width: 64px;
     height: 4px;
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(42, 31, 20, 0.2);
     border-radius: 2px;
     cursor: pointer;
 }
@@ -702,7 +727,7 @@ body {
 .player-fill {
     height: 100%;
     width: 0%;
-    background: #000;
+    background: #2a1f14;
     border-radius: 2px;
     transition: width 0.1s linear;
     position: relative;
@@ -716,7 +741,7 @@ body {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: #000;
+    background: #2a1f14;
     cursor: grab;
     transition: box-shadow 0.2s;
 }
@@ -728,13 +753,39 @@ body {
 
 /* Tempo */
 .player-time {
-    color: #000;
+    color: #2a1f14;
     font-size: 11px;
-    font-family: "Courier New", monospace;
+    font-family: 'Caslon 540';
+    font-weight: bold;
+    letter-spacing: 1px;
     min-width: 36px;
     text-align: right;
     flex-shrink: 0;
-    opacity: 0.6;
+    opacity: 0.7;
+}
+
+/* Linha decorativa que liga mapa → vídeo → créditos (placeholder) */
+.vozes-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 60px auto 50px;
+}
+
+.vozes-connector-line,
+.vozes-connector-spiral {
+    display: block;
+}
+
+.vozes-connector-line {
+    width: 40px;
+    height: 140px;
+}
+
+.vozes-connector-spiral {
+    width: 48px;
+    height: 48px;
+    margin-top: -4px;
 }
 
 /* =============================================
@@ -742,10 +793,8 @@ body {
    ============================================= */
 
 .vozes-end {
-    margin-top: 60px;
-    padding: 40px 0;
+    padding: 0 0 40px;
     text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .vozes-end-title {
@@ -791,18 +840,69 @@ body {
 }
 
 /* =============================================
+   CRÉDITOS
+   ============================================= */
+
+.vozes-credits {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 24px;
+    color: #000;
+    font-family: "Lora", serif;
+}
+
+.vozes-credits-title {
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 32px;
+    letter-spacing: -0.03em;
+    margin-bottom: 40px;
+}
+
+.vozes-credits-block {
+    margin-top: 32px;
+}
+
+.vozes-credits-role {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.vozes-credits-names {
+    font-size: 14px;
+    line-height: 1.9;
+    color: #333;
+}
+
+.vozes-credits-name {
+    font-size: 14px;
+    color: #333;
+}
+
+.vozes-credits-sub {
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+    margin-top: 70px;
+}
+
+/* =============================================
    RESPONSIVO - VOZES INTERATIVA
    ============================================= */
 
 @media (max-width: 1280px) {
     .vozes-stage {
-        padding: 70px 20px 30px;
+        padding: 20px 20px 30px;
     }
 }
 
 @media (max-width: 768px) {
     .vozes-stage {
-        padding: 60px 12px 20px;
+        padding: 16px 12px 20px;
     }
 
     .vozes-end-title {
@@ -831,7 +931,7 @@ body {
 
 @media (max-width: 480px) {
     .vozes-stage {
-        padding: 50px 8px 16px;
+        padding: 12px 8px 16px;
     }
 
     .vozes-end-title {
