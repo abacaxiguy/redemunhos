@@ -10,26 +10,29 @@
 const IMG_W = 2524;
 const IMG_H = 3508;
 
-// Coordenadas absolutas originais (vindas do coords.json).
+// Coordenadas absolutas originais + áudio associado.
+// O campo `audio` viaja junto do hotspot para que a relação fique
+// explícita — sem precisar conferir duas listas em paralelo.
 const HOTSPOTS_RAW = [
-    { id: "vaqueiro", x: 694, y: 922, w: 251, h: 238 },
-    { id: "fogueira", x: 972, y: 922, w: 236, h: 230 },
-    { id: "sol", x: 1262, y: 855, w: 379, h: 342 },
-    { id: "peixes", x: 1656, y: 907, w: 262, h: 218 },
-    { id: "facas", x: 1931, y: 885, w: 283, h: 283 },
-    { id: "passaro", x: 1787, y: 1492, w: 573, h: 963 },
-    { id: "onça", x: 1641, y: 2483, w: 237, h: 314 },
-    { id: "barquinho", x: 1282, y: 2520, w: 314, h: 218 },
-    { id: "garças", x: 1003, y: 2483, w: 236, h: 232 },
-    { id: "estrelas", x: 635, y: 2483, w: 337, h: 255 },
-    { id: "boi", x: 331, y: 2455, w: 263, h: 278 },
-    { id: "cobra", x: 239, y: 1408, w: 519, h: 963 },
-    { id: "boneco", x: 787, y: 1326, w: 949, h: 923 },
+    { id: "vaqueiro",   audio: "../assets/audio/AdelaideIvánova.m4a",                x: 694,  y: 922,  w: 251, h: 238 },
+    { id: "fogueira",   audio: "../assets/audio/Amandyra1.aac",                       x: 972,  y: 922,  w: 236, h: 230 },
+    { id: "sol",        audio: "../assets/audio/ÉrikaSantos.m4a",                     x: 1262, y: 855,  w: 379, h: 342 },
+    { id: "peixes",     audio: "../assets/audio/GloriaMaciel.wav",                    x: 1656, y: 907,  w: 262, h: 218 },
+    { id: "facas",      audio: "../assets/audio/GuilhermeGontijoFlores (1).mp3.mpeg", x: 1931, y: 885,  w: 283, h: 283 },
+    { id: "passaro",    audio: "../assets/audio/JesuítaBarbosa.m4a",                  x: 1787, y: 1492, w: 573, h: 963 },
+    { id: "onça",       audio: "../assets/audio/JúliaCunha.m4a",                      x: 1641, y: 2483, w: 237, h: 314 },
+    { id: "barquinho",  audio: "../assets/audio/KennyoSevera.m4a",                    x: 1282, y: 2520, w: 314, h: 218 },
+    { id: "garças",     audio: "../assets/audio/LucasLitrento (1).m4a",               x: 1003, y: 2483, w: 236, h: 232 },
+    { id: "estrelas",   audio: "../assets/audio/Luciano.m4a",                         x: 635,  y: 2483, w: 337, h: 255 },
+    { id: "boi",        audio: "../assets/audio/MarianaSalvador.m4a",                  x: 331,  y: 2455, w: 263, h: 278 },
+    { id: "cobra",      audio: "../assets/audio/Parte 1 - versão 1.m4a.mp4",          x: 239,  y: 1408, w: 519, h: 963 },
+    { id: "boneco",     audio: "../assets/audio/TamlynGhannam.m4a",                    x: 787,  y: 1326, w: 949, h: 923 },
 ];
 
 function toRelative(coord) {
     return {
         id: coord.id,
+        audio: coord.audio,
         left: (coord.x / IMG_W) * 100,
         top: (coord.y / IMG_H) * 100,
         width: (coord.w / IMG_W) * 100,
@@ -39,10 +42,11 @@ function toRelative(coord) {
 
 const HOTSPOTS = HOTSPOTS_RAW.map(toRelative);
 
-// Placeholder MP3 — troque para assets/<id>.mp3 em produção.
-const MP3_URL = "https://samplelib.com/lib/preview/mp3/sample-3s.mp3";
+// Índice por id para lookup O(1).
+const HOTSPOT_BY_ID = Object.fromEntries(HOTSPOTS.map((h) => [h.id, h]));
+
 function audioSrc(id) {
-    return MP3_URL;
+    return HOTSPOT_BY_ID[id]?.audio;
 }
 
 // ============================================================
@@ -140,6 +144,12 @@ class AudioPlayer {
         this.toggle();
     }
 
+    isPlaying() {
+        // Considera "tocando" qualquer áudio que esteja carregado e em
+        // estado de reproduçao (nao pausado, nao encerrado).
+        return !!(this.audio && !this.audio.paused && !this.audio.ended);
+    }
+
     close() {
         if (this.audio) {
             this.audio.pause();
@@ -177,6 +187,10 @@ class AudioPlayer {
         this.audio.addEventListener("ended", () => {
             this.icon.className = "fa-solid fa-play";
             this.audio.currentTime = 0;
+            // Sinaliza que o áudio nao está mais tocando para que o
+            // HotspotManager possa liberar o overlay se o mouse ja
+            // tiver saído do hotspot.
+            this.element.dispatchEvent(new CustomEvent("audio-ended"));
         });
         this.audio.addEventListener("loadedmetadata", () => this._sync());
     }
@@ -225,6 +239,17 @@ class HotspotManager {
         this.player = player;
         this.hotspots = [];
         this.activeId = null;
+        // Quando o áudio termina ou é pausado/fechado e o mouse ja nao
+        // está sobre um hotspot, libera o overlay.
+        this.player.element.addEventListener("audio-ended", () => {
+            if (this.activeId === null && !this._anyHovered()) {
+                this.darkenEl.classList.remove("is-visible");
+            }
+        });
+    }
+
+    _anyHovered() {
+        return this.hotspots.some((h) => h.el.matches(":hover"));
     }
 
     render() {
@@ -288,7 +313,10 @@ class HotspotManager {
                 div.classList.add("is-hovered");
             });
             div.addEventListener("mouseleave", () => {
-                if (this.activeId !== h.id) {
+                // Se há áudio tocando, mantém o overlay ativo mesmo com o
+                // mouse fora do hotspot — só some quando o áudio terminar
+                // ou for pausado/fechado.
+                if (this.activeId !== h.id && !this.player.isPlaying()) {
                     this.darkenEl.classList.remove("is-visible");
                 }
                 div.classList.remove("is-hovered");

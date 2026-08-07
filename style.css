@@ -405,18 +405,30 @@ body {
     overflow-y: auto;
 }
 
+.vozes-bg {
+position: fixed;
+    top: 500px;
+    left: 500px;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    transform: rotate(180deg);
+    opacity: 0.55;
+}
+
 .vozes-title {
     font-family: "Caslon 540", "Lora", Georgia, serif;
     font-style: italic;
     font-weight: 400;
     letter-spacing: -0.068em;
-    font-size: 64px;
+    font-size: 90px;
     text-align: center;
     margin: 0 auto 10px;
     /* padding, não margin: margin-top colapsaria com a margem do body
        e empurraria o <body> inteiro para baixo, arrastando o back-arrow
        (position:absolute relativo ao body) junto com o título. */
     padding-top: 110px;
+    margin-bottom: 80px;
 }
 
 .vozes-stage {
@@ -1006,25 +1018,22 @@ body {
 .vozes-credits-title {
     font-family: "Caslon 540", "Lora", Georgia, serif;
     font-style: italic;
-    font-weight: 400;
-    font-size: 32px;
+    font-size: 28px;
     letter-spacing: -0.03em;
-    margin-bottom: 40px;
+    margin-bottom: 0px;
 }
 
 .vozes-credits-block {
-    margin-top: 32px;
+    margin-top: 12px;
 }
 
 .vozes-credits-role {
     font-weight: 700;
     font-size: 15px;
-    margin-bottom: 8px;
 }
 
 .vozes-credits-names {
     font-size: 14px;
-    line-height: 1.9;
     color: #333;
 }
 
@@ -1036,7 +1045,7 @@ body {
 .vozes-credits-sub {
     font-family: "Caslon 540", "Lora", Georgia, serif;
     font-style: italic;
-    font-weight: 400;
+    font-weight: bold;
     font-size: 28px;
     letter-spacing: -0.03em;
     margin-top: 70px;
