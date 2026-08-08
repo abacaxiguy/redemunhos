@@ -429,6 +429,7 @@ body {
        (position:absolute relativo ao body) junto com o título. */
     padding-top: 110px;
     margin-bottom: 80px;
+    line-height: 0.8;
 }
 
 .vozes-stage {
@@ -1293,6 +1294,10 @@ body {
     #img-danarrativa .art-drawing {
         width: 200px;
     }
+
+    .vozes-title {
+        font-size: 32px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1442,6 +1447,10 @@ body {
     .poem-quote {
         margin-left: 30px;
         margin-right: 30px;
+    }
+
+    .vozes-title {
+        font-size: 28px;
     }
 }
 
@@ -1599,6 +1608,10 @@ body {
 
     .post-tags {
         font-size: 16px;
+    }
+
+    .vozes-title {
+        font-size: 24px;
     }
 }
 
@@ -1761,5 +1774,9 @@ body {
 
     .post-tags {
         font-size: 15px;
+    }
+
+    .vozes-title {
+        font-size: 20px;
     }
 }
