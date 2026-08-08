@@ -1026,21 +1026,21 @@ body {
 }
 
 .vozes-credits-block {
-    margin-top: 12px;
+    margin-top: 16px;
 }
 
 .vozes-credits-role {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .vozes-credits-names {
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
 }
 
 .vozes-credits-name {
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
 }
 
