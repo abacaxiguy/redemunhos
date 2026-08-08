@@ -1019,6 +1019,7 @@ body {
 .vozes-credits-title {
     font-family: "Caslon 540", "Lora", Georgia, serif;
     font-style: italic;
+    font-weight: bold;
     font-size: 28px;
     letter-spacing: -0.03em;
     margin-bottom: 0px;
