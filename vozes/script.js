@@ -14,19 +14,19 @@ const IMG_H = 3508;
 // O campo `audio` viaja junto do hotspot para que a relação fique
 // explícita — sem precisar conferir duas listas em paralelo.
 const HOTSPOTS_RAW = [
-    { id: "vaqueiro", audio: "../assets/audio/vaqueiro (GLORIA MACIEL).m4a", x: 694, y: 922, w: 251, h: 238 },
-    { id: "fogueira", audio: "../assets/audio/fogueira (LUCIANO PEDRO JR).m4a", x: 972, y: 922, w: 236, h: 230 },
-    { id: "sol", audio: "../assets/audio/sol (ADELAIDE IVÁNOVA).m4a", x: 1262, y: 855, w: 379, h: 342 },
-    { id: "peixes", audio: "../assets/audio/peixes (ÉRIKA SANTOS).m4a", x: 1656, y: 907, w: 262, h: 218 },
-    { id: "facas", audio: "../assets/audio/facas (MARIANA SALVADOR).m4a", x: 1931, y: 885, w: 283, h: 283 },
-    { id: "passaro", audio: "../assets/audio/pássaro grande (KENNYO SEVERA).m4a", x: 1787, y: 1492, w: 573, h: 963 },
-    { id: "onça", audio: "../assets/audio/onça (GUILHERME GONTIJO FLORES).m4a", x: 1641, y: 2483, w: 237, h: 314 },
-    { id: "barquinho", audio: "../assets/audio/barquinho (CÁSSIA DE JESUS).m4a", x: 1282, y: 2520, w: 314, h: 218 },
-    { id: "garças", audio: "../assets/audio/garças (LUCAS LITRENTO).m4a", x: 1003, y: 2483, w: 236, h: 232 },
-    { id: "estrelas", audio: "../assets/audio/estrelas (JÚLIA CUNHA).m4a", x: 635, y: 2483, w: 337, h: 255 },
-    { id: "boi", audio: "../assets/audio/cabeça de boi (TAMLYN GHANNAM).m4a", x: 331, y: 2455, w: 263, h: 278 },
-    { id: "cobra", audio: "../assets/audio/cobra grande (JESUÍTA BARBOSA).m4a", x: 239, y: 1408, w: 519, h: 963 },
-    { id: "boneco", audio: "../assets/audio/diabo no meio (AMANDYRA).m4a", x: 787, y: 1326, w: 949, h: 923 },
+    { id: "vaqueiro", audio: "../assets/audio/vaqueiro.m4a", x: 694, y: 922, w: 251, h: 238 },
+    { id: "fogueira", audio: "../assets/audio/fogueira.m4a", x: 972, y: 922, w: 236, h: 230 },
+    { id: "sol", audio: "../assets/audio/sol.m4a", x: 1262, y: 855, w: 379, h: 342 },
+    { id: "peixes", audio: "../assets/audio/peixes.m4a", x: 1656, y: 907, w: 262, h: 218 },
+    { id: "facas", audio: "../assets/audio/facas.m4a", x: 1931, y: 885, w: 283, h: 283 },
+    { id: "passaro", audio: "../assets/audio/pássaro grande.m4a", x: 1787, y: 1492, w: 573, h: 963 },
+    { id: "onça", audio: "../assets/audio/onça.m4a", x: 1641, y: 2483, w: 237, h: 314 },
+    { id: "barquinho", audio: "../assets/audio/barquinho.m4a", x: 1282, y: 2520, w: 314, h: 218 },
+    { id: "garças", audio: "../assets/audio/garças.m4a", x: 1003, y: 2483, w: 236, h: 232 },
+    { id: "estrelas", audio: "../assets/audio/estrelas.m4a", x: 635, y: 2483, w: 337, h: 255 },
+    { id: "boi", audio: "../assets/audio/cabeça de boi.m4a", x: 331, y: 2455, w: 263, h: 278 },
+    { id: "cobra", audio: "../assets/audio/cobra grande.m4a", x: 239, y: 1408, w: 519, h: 963 },
+    { id: "boneco", audio: "../assets/audio/diabo.m4a", x: 787, y: 1326, w: 949, h: 923 },
 ];
 
 function toRelative(coord) {
