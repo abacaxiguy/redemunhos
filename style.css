@@ -15,11 +15,16 @@ a {
     color: #000;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     font-family: "Lora", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f5f5;
     color: #000;
     min-height: 100vh;
+    max-width: 100vw;
     position: relative;
     overflow-x: hidden;
 }
@@ -353,6 +358,121 @@ body {
     height: 60px;
 }
 
+.support {
+    text-align: center;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.support-text {
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0;
+}
+
+.support-qrcode {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.pix-copy {
+    font-family: "Lora", serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.pix-copy-code {
+    font-family: inherit;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    max-width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.pix-copy-code:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.pix-copy.copied .pix-copy-code {
+    background-color: rgba(211, 47, 47, 0.06);
+}
+
+.pix-copy.copied .pix-copy-icon {
+    color: #d32f2f;
+}
+
+.pix-copy-text {
+    font-size: 13px;
+    word-break: break-all;
+    color: #555;
+    max-width: 280px;
+    text-align: left;
+}
+
+.pix-copy-icon {
+    flex-shrink: 0;
+    display: flex;
+    color: #888;
+    transition: color 0.3s;
+}
+
+.pix-copy-feedback {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .support {
+        margin-top: 40px;
+        padding: 0 20px;
+    }
+
+    .support-text {
+        font-size: 15px;
+    }
+
+    .support-qrcode {
+        width: 150px;
+        height: 150px;
+    }
+
+    .pix-copy-text {
+        font-size: 12px;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .support-qrcode {
+        width: 130px;
+        height: 130px;
+    }
+
+    .pix-copy {
+        padding: 8px 12px;
+    }
+
+    .pix-copy-text {
+        font-size: 11px;
+    }
+}
+
 .blog-post {
     font-family: "EB Garamond", Georgia, serif;
 }
@@ -403,6 +523,7 @@ body {
 
 .vozes-interactive {
     overflow-y: auto;
+    background: #EDE9E3;
 }
 
 .vozes-bg {
@@ -419,7 +540,7 @@ body {
 .vozes-title {
     font-family: "Caslon 540", "Lora", Georgia, serif;
     font-style: italic;
-    font-weight: 400;
+    font-weight: 700;
     letter-spacing: -0.068em;
     font-size: 90px;
     text-align: center;
@@ -452,6 +573,13 @@ body {
     display: block;
     width: 100%;
     height: auto;
+    /* Reserva a proporção real (== IMG_W/IMG_H em script.js) antes da
+       imagem carregar. Sem isso, .vozes-image-wrap fica com altura 0/150px
+       em cache frio, e HotspotManager.render() (que lê getBoundingClientRect
+       nesse momento) grava offsets errados nos hotspots — o "window" some
+       de novo depois que a imagem carrega (é % e se autoajusta), mas o
+       recorte de fundo (mirage/clone, em px fixo) fica torto pra sempre. */
+    aspect-ratio: 2524 / 3508;
 }
 
 /* Escuridão global — cobre a viewport inteira */
@@ -929,28 +1057,38 @@ body {
     opacity: 0.7;
 }
 
-/* Linha decorativa que liga mapa → vídeo → créditos (placeholder) */
+/* Linha decorativa que liga mapa → vídeo → créditos */
 .vozes-connector {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 60px auto 50px;
+    margin: 0 auto;
 }
 
-.vozes-connector-line,
-.vozes-connector-spiral {
+/* Encostado no mapa e no vídeo — sem espaço nas duas pontas.
+   mapa.png tem uma margem transparente de ~270px (numa arte de 3508px
+   de altura / 2524px de largura) entre o desenho e a borda do arquivo —
+   não dá pra recortar o PNG porque os hotspots do script.js usam
+   coordenadas absolutas baseadas nesse tamanho original. Compensa com
+   margin-top negativo; em % é relativo à largura do container (regra do
+   CSS pra margin vertical), que é a mesma base usada pelo mapa, então
+   escala junto em qualquer viewport. */
+.vozes-connector--map-video {
+    /* margin: -10.7% auto 0; */
+}
+
+/* Encostado no vídeo, com 30px só antes dos créditos */
+.vozes-connector--video-credits {
+    margin: 0 auto 30px;
+}
+
+.vozes-connector-image {
     display: block;
-}
+    /* +40% do tamanho original, -20% em cima disso (clamp(160px, 32vw, 320px)) */
+    width: clamp(179px, 35.8vw, 358px);
+    height: auto;
+    margin-top: -18%;
 
-.vozes-connector-line {
-    width: 40px;
-    height: 140px;
-}
-
-.vozes-connector-spiral {
-    width: 48px;
-    height: 48px;
-    margin-top: -4px;
 }
 
 /* =============================================
@@ -980,6 +1118,7 @@ body {
 }
 
 .vozes-video-frame {
+    position: relative;
     max-width: 640px;
     margin: 0 auto;
     border-radius: 12px;
@@ -994,6 +1133,134 @@ body {
     height: auto;
     aspect-ratio: 16 / 9;
     background: #000;
+    cursor: pointer;
+}
+
+/* Em fullscreen, o frame precisa preencher a tela inteira — sem isso,
+   o max-width:640px acima continua valendo (regra de autor sempre vence
+   o estilo padrão de UA para :fullscreen) e o vídeo fica preso a um
+   retângulo pequeno num canto, com o resto da tela em preto. */
+.vozes-video-frame:fullscreen,
+.vozes-video-frame:-webkit-full-screen {
+    max-width: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    border-radius: 0;
+    border: none;
+}
+
+.vozes-video-frame:fullscreen .vozes-video,
+.vozes-video-frame:-webkit-full-screen .vozes-video {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: unset;
+    object-fit: contain;
+}
+
+/* Botão central de play/pause */
+.video-center-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.25s ease, transform 0.2s ease;
+}
+
+.video-center-btn:hover {
+    transform: translate(-50%, -50%) scale(1.06);
+}
+
+.video-center-btn i {
+    pointer-events: none;
+    /* Play não é ótico-centralizado no glifo — desloca um pouco pra
+       compensar e ficar visualmente centralizado no círculo. */
+    margin-left: 2px;
+}
+
+.vozes-video-frame.is-playing .video-center-btn {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.vozes-video-frame.is-playing:hover .video-center-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Barra de controles inferior */
+.video-controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.vozes-video-frame:hover .video-controls,
+.vozes-video-frame:focus-within .video-controls,
+.vozes-video-frame:not(.is-playing) .video-controls {
+    opacity: 1;
+}
+
+.video-track {
+    position: relative;
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.video-fill {
+    height: 100%;
+    width: 0%;
+    background: #fff;
+    border-radius: 2px;
+}
+
+.video-fullscreen-btn {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.75;
+    transition: opacity 0.2s;
+}
+
+.video-fullscreen-btn:hover {
+    opacity: 1;
+}
+
+.video-fullscreen-btn i {
+    pointer-events: none;
 }
 
 .vozes-end-caption {
@@ -1014,13 +1281,14 @@ body {
     padding: 0 24px;
     color: #000;
     font-family: "Lora", serif;
+    margin-top: 60px;
 }
 
 .vozes-credits-title {
     font-family: "Caslon 540", "Lora", Georgia, serif;
     font-style: italic;
     font-weight: bold;
-    font-size: 28px;
+    font-size: 33px;
     letter-spacing: -0.03em;
     margin-bottom: 0px;
 }
@@ -1031,16 +1299,16 @@ body {
 
 .vozes-credits-role {
     font-weight: 700;
-    font-size: 17px;
+    font-size: 22px;
 }
 
 .vozes-credits-names {
-    font-size: 16px;
+    font-size: 21px;
     color: #333;
 }
 
 .vozes-credits-name {
-    font-size: 16px;
+    font-size: 21px;
     color: #333;
 }
 
@@ -1051,6 +1319,22 @@ body {
     font-size: 28px;
     letter-spacing: -0.03em;
     margin-top: 70px;
+}
+
+/* Texto da parte de baixo dos créditos (prévia + de/com), maior só no
+   desktop — no mobile mantém o mesmo tamanho do resto dos créditos. */
+@media (min-width: 769px) {
+    .vozes-credits-bottom .vozes-credits-sub {
+        font-size: 34px;
+    }
+
+    .vozes-credits-bottom .vozes-credits-role {
+        font-size: 28px;
+    }
+
+    .vozes-credits-bottom .vozes-credits-name {
+        font-size: 27px;
+    }
 }
 
 /* =============================================
@@ -1077,6 +1361,11 @@ body {
         border-radius: 8px;
     }
 
+    /* +20% do tamanho original (clamp(160px, 32vw, 320px)) */
+    .vozes-connector-image {
+        width: clamp(192px, 38.4vw, 384px);
+    }
+
     .custom-player {
         gap: 6px;
     }
@@ -1089,6 +1378,20 @@ body {
         width: 24px;
         height: 24px;
         font-size: 12px;
+    }
+
+    .vozes-credits-title,
+    .vozes-credits-sub {
+        font-size: 29px;
+    }
+
+    .vozes-credits-role {
+        font-size: 18px;
+    }
+
+    .vozes-credits-names,
+    .vozes-credits-name {
+        font-size: 17px;
     }
 }
 
@@ -1297,7 +1600,7 @@ body {
     }
 
     .vozes-title {
-        font-size: 32px;
+        font-size: 38px;
     }
 }
 
@@ -1451,7 +1754,7 @@ body {
     }
 
     .vozes-title {
-        font-size: 28px;
+        font-size: 34px;
     }
 }
 
@@ -1612,7 +1915,7 @@ body {
     }
 
     .vozes-title {
-        font-size: 24px;
+        font-size: 29px;
     }
 }
 
@@ -1778,6 +2081,6 @@ body {
     }
 
     .vozes-title {
-        font-size: 20px;
+        font-size: 24px;
     }
 }

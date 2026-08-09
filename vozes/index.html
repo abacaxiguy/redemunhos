@@ -15,9 +15,6 @@
         <link rel="stylesheet" href="../style.css" />
     </head>
     <body class="vozes-interactive">
-        <div class="vozes-bg">
-            <img src="../img/bg-vozes.png" alt="" />
-        </div>
         <a href="/" class="back-arrow"><img src="../img/back.png" alt="Back" /></a>
 
         <h2 class="vozes-title">as vozes no meio do redemunho</h2>
@@ -29,46 +26,57 @@
                     alt="As vozes no meio do redemunho"
                     class="vozes-image"
                     id="vozes-image"
+                    width="2524"
+                    height="3508"
                 />
 
                 <div class="vozes-darken" id="vozes-darken"></div>
                 <div class="vozes-hotspots" id="vozes-hotspots"></div>
             </div>
 
-            <!-- placeholder: substituir pelo desenho final da linha -->
-            <div class="vozes-connector" aria-hidden="true">
-                <svg class="vozes-connector-line" viewBox="0 0 40 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 0C6 18 34 32 20 50C6 68 34 82 20 100C9 113 30 126 20 140" stroke="#1c1c1c" stroke-opacity="0.55" stroke-width="2" stroke-linecap="round" />
-                </svg>
+            <!--
+            <div class="vozes-connector vozes-connector--map-video" aria-hidden="true">
+                <img class="vozes-connector-image" src="../img/veredas-2.png" alt="" />
             </div>
+            -->
 
             <div class="player-host" id="player-host"></div>
 
             <section class="vozes-end">
-                <div class="vozes-video-frame">
+                <!--
+                <div class="vozes-video-frame" id="vozes-video-frame">
                     <video
                         class="vozes-video"
                         id="vozes-video"
-                        controls
-                        preload="metadata"
+                        preload="none"
+                        poster="../assets/video/cavalo-site-poster.jpg"
+                        playsinline
                     >
-                        <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4" />
+                        <source src="../assets/video/cavalo-site-web.mp4" type="video/mp4" />
                         Seu navegador não suporta vídeo HTML5.
                     </video>
-                </div>
 
-                <!-- placeholder: substituir pelo desenho final da linha + espiral -->
-                <div class="vozes-connector" aria-hidden="true">
-                    <svg class="vozes-connector-line" viewBox="0 0 40 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20 0C6 18 34 32 20 50C6 68 34 82 20 100C9 113 30 126 20 140" stroke="#1c1c1c" stroke-opacity="0.55" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                    <svg class="vozes-connector-spiral" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M24 4C35 4 44 13 44 24C44 35 35 44 24 44C15 44 8 37 8 28C8 20 15 14 22 14C28 14 33 19 33 25C33 30 29 33 25 33" stroke="#1c1c1c" stroke-opacity="0.55" stroke-width="2.2" stroke-linecap="round" />
-                    </svg>
+                    <button class="video-center-btn" id="video-center-btn" aria-label="Play/Pause">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+
+                    <div class="video-controls">
+                        <div class="video-track" id="video-track">
+                            <div class="video-fill" id="video-fill"></div>
+                        </div>
+                        <button class="video-fullscreen-btn" id="video-fullscreen-btn" aria-label="Tela cheia">
+                            <i class="fa-solid fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                -->
+
+                <div class="vozes-connector vozes-connector--video-credits" aria-hidden="true">
+                    <img class="vozes-connector-image" src="../img/veredas-1.png" alt="" />
                 </div>
 
                 <div class="vozes-credits">
-                    <p class="vozes-credits-title">as vozes no meio redemunho</p>
+                    <!-- <p class="vozes-credits-title">as vozes no meio redemunho</p> -->
 
                     <div class="vozes-credits-block">
                         <p class="vozes-credits-role">vozes</p>
@@ -95,17 +103,21 @@
                         <p class="vozes-credits-name">joão lucas oliveira</p>
                     </div>
 
-                    <p class="vozes-credits-sub">prévia de Arrumo um cavalo e trovejo no mundo</p>
+                    <!--
+                    <div class="vozes-credits-bottom">
+                        <p class="vozes-credits-sub">prévia de Arrumo um cavalo e trovejo no mundo</p>
 
-                    <div class="vozes-credits-block">
-                        <p class="vozes-credits-role">de</p>
-                        <p class="vozes-credits-name">lenine oliveira</p>
-                    </div>
+                        <div class="vozes-credits-block">
+                            <p class="vozes-credits-role">de</p>
+                            <p class="vozes-credits-name">lenine oliveira</p>
+                        </div>
 
-                    <div class="vozes-credits-block">
-                        <p class="vozes-credits-role">com</p>
-                        <p class="vozes-credits-name">kennyo severa</p>
+                        <div class="vozes-credits-block">
+                            <p class="vozes-credits-role">com</p>
+                            <p class="vozes-credits-name">kennyo severa</p>
+                        </div>
                     </div>
+                    -->
 
                     <div class="end-marker">
                         <img src="../img/watermark.png" alt="" />
