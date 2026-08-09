@@ -55,11 +55,30 @@ function audioSrc(id) {
 class AudioPlayer {
     constructor(host) {
         this.host = host;
-        this.audio = null;
         this.element = null;
         this.currentHotspotId = null;
         this.isOpen = false;
         this.isDragging = false;
+        // Um único <audio> reaproveitado entre hotspots. iOS/WebKit exige
+        // que cada elemento de mídia seja "desbloqueado" pelo próprio gesto
+        // do usuário — pausar um elemento e dar play() num Audio() novo no
+        // mesmo clique é silenciosamente rejeitado lá (por isso a troca de
+        // hotspot exigia um segundo toque no iPhone, mas funcionava no
+        // Android). Reaproveitando o mesmo elemento, ele fica desbloqueado
+        // depois do primeiro play() e todas as trocas seguintes funcionam
+        // de primeira, nos dois sistemas.
+        this.audio = new Audio();
+        this.audio.preload = "auto";
+        this.audio.addEventListener("timeupdate", () => this._sync());
+        this.audio.addEventListener("ended", () => {
+            this.icon.className = "fa-solid fa-play";
+            this.audio.currentTime = 0;
+            // Sinaliza que o áudio nao está mais tocando para que o
+            // HotspotManager possa liberar o overlay se o mouse ja
+            // tiver saído do hotspot.
+            this.element?.dispatchEvent(new CustomEvent("audio-ended"));
+        });
+        this.audio.addEventListener("loadedmetadata", () => this._sync());
         this._build();
     }
 
@@ -177,22 +196,10 @@ class AudioPlayer {
     }
 
     _createAudio(id) {
-        if (this.audio) {
-            this.audio.pause();
-            this.audio.remove();
-        }
-        this.audio = new Audio(audioSrc(id));
-        this.audio.preload = "auto";
-        this.audio.addEventListener("timeupdate", () => this._sync());
-        this.audio.addEventListener("ended", () => {
-            this.icon.className = "fa-solid fa-play";
-            this.audio.currentTime = 0;
-            // Sinaliza que o áudio nao está mais tocando para que o
-            // HotspotManager possa liberar o overlay se o mouse ja
-            // tiver saído do hotspot.
-            this.element.dispatchEvent(new CustomEvent("audio-ended"));
-        });
-        this.audio.addEventListener("loadedmetadata", () => this._sync());
+        this.audio.pause();
+        this.audio.currentTime = 0;
+        this.audio.src = audioSrc(id);
+        this.audio.load();
     }
 
     _sync() {
