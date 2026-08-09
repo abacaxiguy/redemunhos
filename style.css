@@ -15,11 +15,16 @@ a {
     color: #000;
 }
 
+html {
+    overflow-x: hidden;
+}
+
 body {
     font-family: "Lora", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f5f5;
     color: #000;
     min-height: 100vh;
+    max-width: 100vw;
     position: relative;
     overflow-x: hidden;
 }
@@ -353,6 +358,119 @@ body {
     height: 60px;
 }
 
+.support {
+    text-align: center;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.support-text {
+    max-width: 480px;
+    margin: 0;
+}
+
+.support-qrcode {
+    width: 180px;
+    height: 180px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.pix-copy {
+    font-family: "Lora", serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.pix-copy-code {
+    font-family: inherit;
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    max-width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.pix-copy-code:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.pix-copy.copied .pix-copy-code {
+    background-color: rgba(211, 47, 47, 0.06);
+}
+
+.pix-copy.copied .pix-copy-icon {
+    color: #d32f2f;
+}
+
+.pix-copy-text {
+    font-size: 13px;
+    word-break: break-all;
+    color: #555;
+    max-width: 280px;
+    text-align: left;
+}
+
+.pix-copy-icon {
+    flex-shrink: 0;
+    display: flex;
+    color: #888;
+    transition: color 0.3s;
+}
+
+.pix-copy-feedback {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .support {
+        margin-top: 40px;
+        padding: 0 20px;
+    }
+
+    .support-text {
+        font-size: 15px;
+    }
+
+    .support-qrcode {
+        width: 150px;
+        height: 150px;
+    }
+
+    .pix-copy-text {
+        font-size: 12px;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .support-qrcode {
+        width: 130px;
+        height: 130px;
+    }
+
+    .pix-copy {
+        padding: 8px 12px;
+    }
+
+    .pix-copy-text {
+        font-size: 11px;
+    }
+}
+
 .blog-post {
     font-family: "EB Garamond", Georgia, serif;
 }
@@ -395,6 +513,909 @@ body {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+/* =============================================
+   PÁGINA INTERATIVA - VOZES
+   ============================================= */
+
+.vozes-interactive {
+    overflow-y: auto;
+    background: #EDE9E3;
+}
+
+.vozes-bg {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    transform: rotate(180deg);
+    opacity: 0.55;
+}
+
+.vozes-title {
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: -0.068em;
+    font-size: 90px;
+    text-align: center;
+    margin: 0 auto 10px;
+    /* padding, não margin: margin-top colapsaria com a margem do body
+       e empurraria o <body> inteiro para baixo, arrastando o back-arrow
+       (position:absolute relativo ao body) junto com o título. */
+    padding-top: 110px;
+    margin-bottom: 80px;
+    line-height: 0.8;
+}
+
+.vozes-stage {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Container da imagem + hotspots — fica acima do darken global */
+.vozes-image-wrap {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.vozes-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* Reserva a proporção real (== IMG_W/IMG_H em script.js) antes da
+       imagem carregar. Sem isso, .vozes-image-wrap fica com altura 0/150px
+       em cache frio, e HotspotManager.render() (que lê getBoundingClientRect
+       nesse momento) grava offsets errados nos hotspots — o "window" some
+       de novo depois que a imagem carrega (é % e se autoajusta), mas o
+       recorte de fundo (mirage/clone, em px fixo) fica torto pra sempre. */
+    aspect-ratio: 2524 / 3508;
+}
+
+/* Escuridão global — cobre a viewport inteira */
+.vozes-darken {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.58);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    z-index: 2;
+}
+
+.vozes-darken.is-visible {
+    opacity: 1;
+}
+
+/* Container dos hotspots */
+.vozes-hotspots {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+/* ============================================================
+   HOTSPOT - MANCHA DE LUZ ORGÂNICA (Organic Blob Spotlight)
+   ------------------------------------------------------------
+   Sem elipse perfeita. Forma irregular via border-radius 8-value
+   que MORFA entre configs diferentes + leve scale. Bordas
+   esfumaçadas pelo mask-image radial (fade longo). Ruído
+   sutil com mix-blend-mode soft-light.
+   ============================================================ */
+
+.hotspot {
+    position: absolute;
+    cursor: pointer;
+    overflow: hidden;
+    background: transparent;
+    /* Forma orgânica inicial — será animada por morphing-light */
+    border-radius: 47% 53% 38% 62% / 52% 41% 59% 48%;
+    /* Mask radial: centro opaco, fade longo até sumir */
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 4%,
+        rgba(0, 0, 0, 0.95) 30%,
+        rgba(0, 0, 0, 0.4) 65%,
+        rgba(0, 0, 0, 0) 88%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 4%,
+        rgba(0, 0, 0, 0.95) 30%,
+        rgba(0, 0, 0, 0.4) 65%,
+        rgba(0, 0, 0, 0) 88%
+    );
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    transform-origin: center center;
+    will-change: transform, border-radius;
+}
+
+/* Imagem clonada — o "foco" da luz no lugar correto.
+   Opacidade alta: é o que vemos brilhar dentro da mancha. */
+.hotspot-clone {
+    position: absolute;
+    top: var(--noise-y, 0px);
+    left: var(--noise-x, 0px);
+    width: var(--clone-w, 100%);
+    height: auto;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0.85;
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 4%,
+        rgba(0, 0, 0, 0.95) 30%,
+        rgba(0, 0, 0, 0.4) 65%,
+        rgba(0, 0, 0, 0) 88%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 4%,
+        rgba(0, 0, 0, 0.95) 30%,
+        rgba(0, 0, 0, 0.4) 65%,
+        rgba(0, 0, 0, 0) 88%
+    );
+}
+
+/* Miragem — imagem fantasma levemente deslocada, opacidade bem baixa.
+   Cria um efeito de "ondulação" ou reverberação da luz. */
+.hotspot-mirage {
+    position: absolute;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0.18;
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 0.4) 55%,
+        rgba(0, 0, 0, 0) 90%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 0.4) 55%,
+        rgba(0, 0, 0, 0) 90%
+    );
+    filter: blur(3px);
+    z-index: -1;
+}
+
+/* Camada de ruído sutil (textura/areia da luz) */
+.hotspot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/img/noise-texture.png");
+    background-size: 200px 200px;
+    background-repeat: repeat;
+    background-position: var(--noise-x, 0px) var(--noise-y, 0px);
+    mix-blend-mode: soft-light;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    -webkit-mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 0.7) 55%,
+        rgba(0, 0, 0, 0) 92%
+    );
+    mask-image: radial-gradient(
+        ellipse at center,
+        rgba(0, 0, 0, 1) 10%,
+        rgba(0, 0, 0, 0.7) 55%,
+        rgba(0, 0, 0, 0) 92%
+    );
+    transition: opacity 0.6s ease;
+    z-index: 1;
+}
+
+/* Hover: acende a mancha e inicia a respiração orgânica */
+.hotspot:hover {
+    opacity: 1;
+    animation: morphing-light 4.8s ease-in-out infinite alternate;
+}
+
+.hotspot:hover::after {
+    opacity: 0.32;
+}
+
+/* Ativo (após clique): igual ao hover, com ruído levemente mais visível */
+.hotspot.is-active {
+    opacity: 1;
+    animation: morphing-light 4.8s ease-in-out infinite alternate;
+}
+
+.hotspot.is-active::after {
+    opacity: 0.42;
+}
+
+/* Respiração orgânica: morfa border-radius 8-value + leve scale.
+   4 keyframes + alternate = transição contínua sem "pulo". */
+@keyframes morphing-light {
+    0% {
+        border-radius: 47% 53% 38% 62% / 52% 41% 59% 48%;
+        transform: scale(1);
+    }
+    33% {
+        border-radius: 58% 42% 65% 35% / 44% 56% 47% 53%;
+        transform: scale(1.025);
+    }
+    66% {
+        border-radius: 38% 62% 50% 50% / 60% 40% 65% 35%;
+        transform: scale(0.982);
+    }
+    100% {
+        border-radius: 51% 49% 60% 40% / 45% 55% 41% 59%;
+        transform: scale(1.015);
+    }
+}
+
+/* =============================================
+   PLAYER DE ÁUDIO CUSTOMIZADO
+   ============================================= */
+
+/* Sem position:fixed aqui — os filhos são posicionados em coordenadas de
+   documento (ver script.js), então ancoram no <body> (position:relative)
+   e rolam junto com a página, permanecendo onde foram abertos. */
+.player-host {
+    pointer-events: none;
+}
+
+.custom-player {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    /* Mesma amostra/tom do blob de trás (::before) — evita o efeito de
+       "dois blobs" (um claro dentro, outro escuro fora). A pílula garante
+       cobertura total atrás dos botões; o ::before só acrescenta a borda
+       orgânica ao redor, na mesma cor, então lê como uma peça só. */
+    background-color: rgb(222, 184, 118);
+    background-image: url("img/mapa.png");
+    background-position: -900px -1550px;
+    background-size: 2524px auto;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    border: none;
+    /* box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35); */
+    pointer-events: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    z-index: 1000000;
+}
+
+.custom-player.is-open {
+    opacity: 0.50;
+    /* Só border-radius aqui — o "transform" da pílula é controlado pelo
+       JS (translate(-50%,0) para centralizar); animar transform também
+       nessa keyframe substituiria o posicionamento. Duração "quebrada"
+       (7.3s) e mais etapas, pra não repetir num ciclo óbvio. */
+    animation: player-blob-main 7.3s ease-in-out infinite alternate;
+}
+
+@keyframes player-blob-main {
+    0% {
+        border-radius: 42px 30px 48px 26px / 15px 20px 13px 18px;
+    }
+    17% {
+        border-radius: 30px 46px 34px 40px / 18px 13px 19px 15px;
+    }
+    34% {
+        border-radius: 46px 28px 38px 34px / 13px 19px 15px 21px;
+    }
+    50% {
+        border-radius: 34px 40px 30px 44px / 19px 14px 20px 13px;
+    }
+    67% {
+        border-radius: 40px 34px 44px 30px / 14px 18px 16px 20px;
+    }
+    84% {
+        border-radius: 28px 44px 32px 42px / 20px 15px 18px 14px;
+    }
+    100% {
+        border-radius: 38px 36px 44px 30px / 17px 15px 18px 14px;
+    }
+}
+
+/* Segunda mancha por trás, deslocada e rotacionada — dá o efeito de blob
+   em camadas (como um recorte de papel imperfeito), em vez de uma forma
+   geométrica única e perfeita. border-radius fica só de fallback: quem
+   desenha a forma de verdade é o clip-path (polígono de 8 pontos) da
+   animação abaixo, que permite um contorno bem mais irregular do que
+   border-radius sozinho conseguiria. */
+.custom-player::before {
+    content: "";
+    position: absolute;
+    inset: -9px -5px -6px -10px;
+    background-color: rgb(222, 184, 118);
+    background-image: url("img/mapa.png");
+    background-position: -900px -1550px;
+    background-size: 2524px auto;
+    background-repeat: no-repeat;
+    border-radius: 34px 50px 40px 28px / 20px 26px 18px 24px;
+    /* Mesmos 8 pontos-âncora de antes, só que passados por uma spline
+       Catmull-Rom (convertida em curvas de Bézier e amostrada a cada
+       ~7.5°) — os "vértices" viram curva de verdade em vez de cantos
+       retos, então não fica pontudo onde antes era só polygon(). */
+    clip-path: polygon(
+        92.00% 50.00%, 91.45% 54.49%, 89.74% 59.15%, 87.16% 63.85%, 83.98% 68.46%,
+        80.47% 72.85%, 76.90% 76.90%, 73.07% 81.01%, 68.70% 85.37%, 64.01% 89.51%,
+        59.19% 92.97%, 54.45% 95.29%, 50.00% 96.00%, 45.79% 94.73%, 41.64% 91.79%,
+        37.57% 87.69%, 33.60% 83.00%, 29.73% 78.26%, 26.00% 74.00%, 22.02% 70.17%,
+        17.71% 66.31%, 13.52% 62.39%, 9.87% 58.39%, 7.22% 54.27%, 6.00% 50.00%,
+        6.40% 45.43%, 8.12% 40.57%, 10.83% 35.58%, 14.21% 30.66%, 17.94% 25.97%,
+        21.70% 21.70%, 25.72% 17.43%, 30.30% 12.93%, 35.24% 8.67%, 40.31% 5.12%,
+        45.30% 2.74%, 50.00% 2.00%, 54.52% 3.27%, 59.04% 6.26%, 63.49% 10.43%,
+        67.77% 15.21%, 71.80% 20.09%, 75.50% 24.50%, 79.14% 28.56%, 82.84% 32.73%,
+        86.29% 36.98%, 89.17% 41.29%, 91.18% 45.63%
+    );
+    transform: rotate(-3deg);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Duração diferente da pílula principal (9.7s vs 7.3s) — as duas
+   animações nunca voltam a se alinhar no mesmo ponto num ciclo curto,
+   então o conjunto não parece um loop repetitivo. */
+.custom-player.is-open::before {
+    animation: player-blob-back 9.7s ease-in-out infinite alternate;
+}
+
+@keyframes player-blob-back {
+    0% {
+        clip-path: polygon(
+            92.00% 50.00%, 91.45% 54.49%, 89.74% 59.15%, 87.16% 63.85%, 83.98% 68.46%,
+            80.47% 72.85%, 76.90% 76.90%, 73.07% 81.01%, 68.70% 85.37%, 64.01% 89.51%,
+            59.19% 92.97%, 54.45% 95.29%, 50.00% 96.00%, 45.79% 94.73%, 41.64% 91.79%,
+            37.57% 87.69%, 33.60% 83.00%, 29.73% 78.26%, 26.00% 74.00%, 22.02% 70.17%,
+            17.71% 66.31%, 13.52% 62.39%, 9.87% 58.39%, 7.22% 54.27%, 6.00% 50.00%,
+            6.40% 45.43%, 8.12% 40.57%, 10.83% 35.58%, 14.21% 30.66%, 17.94% 25.97%,
+            21.70% 21.70%, 25.72% 17.43%, 30.30% 12.93%, 35.24% 8.67%, 40.31% 5.12%,
+            45.30% 2.74%, 50.00% 2.00%, 54.52% 3.27%, 59.04% 6.26%, 63.49% 10.43%,
+            67.77% 15.21%, 71.80% 20.09%, 75.50% 24.50%, 79.14% 28.56%, 82.84% 32.73%,
+            86.29% 36.98%, 89.17% 41.29%, 91.18% 45.63%
+        );
+        transform: rotate(-3deg) scale(1);
+    }
+    22% {
+        clip-path: polygon(
+            86.00% 50.00%, 86.32% 55.64%, 86.63% 61.85%, 86.67% 68.14%, 86.18% 74.01%,
+            84.88% 78.96%, 82.50% 82.50%, 78.75% 84.33%, 73.76% 84.79%, 67.97% 84.34%,
+            61.80% 83.42%, 55.67% 82.49%, 50.00% 82.00%, 44.46% 82.22%, 38.63% 82.85%,
+            32.85% 83.46%, 27.42% 83.65%, 22.67% 83.00%, 18.90% 81.10%, 16.22% 77.70%,
+            14.40% 73.07%, 13.25% 67.61%, 12.59% 61.69%, 12.23% 55.69%, 12.00% 50.00%,
+            11.70% 44.12%, 11.45% 37.66%, 11.50% 31.11%, 12.12% 25.00%, 13.56% 19.83%,
+            16.10% 16.10%, 20.07% 14.08%, 25.35% 13.40%, 31.45% 13.66%, 37.91% 14.46%,
+            44.25% 15.37%, 50.00% 16.00%, 55.46% 16.17%, 61.08% 16.17%, 66.58% 16.29%,
+            71.69% 16.82%, 76.15% 18.06%, 79.70% 20.30%, 82.22% 23.75%, 83.90% 28.21%,
+            84.93% 33.39%, 85.49% 38.95%, 85.79% 44.59%
+        );
+        transform: rotate(4deg) scale(1.05);
+    }
+    45% {
+        clip-path: polygon(
+            96.00% 50.00%, 94.63% 53.95%, 91.42% 57.79%, 86.99% 61.56%, 81.97% 65.26%,
+            76.96% 68.94%, 72.60% 72.60%, 68.84% 76.68%, 65.17% 81.25%, 61.52% 85.78%,
+            57.82% 89.76%, 54.01% 92.68%, 50.00% 94.00%, 45.70% 93.49%, 41.14% 91.51%,
+            36.46% 88.47%, 31.80% 84.75%, 27.30% 80.76%, 23.10% 76.90%, 18.73% 72.95%,
+            13.97% 68.55%, 9.37% 63.88%, 5.48% 59.11%, 2.84% 54.43%, 2.00% 50.00%,
+            3.39% 45.76%, 6.66% 41.56%, 11.18% 37.44%, 16.33% 33.45%, 21.48% 29.62%,
+            26.00% 26.00%, 29.98% 22.25%, 33.94% 18.28%, 37.91% 14.47%, 41.89% 11.22%,
+            45.91% 8.93%, 50.00% 8.00%, 54.22% 8.65%, 58.57% 10.61%, 62.97% 13.53%,
+            67.31% 17.06%, 71.52% 20.83%, 75.50% 24.50%, 79.71% 28.26%, 84.33% 32.44%,
+            88.81% 36.87%, 92.60% 41.38%, 95.18% 45.81%
+        );
+        transform: rotate(-6deg) scale(0.95);
+    }
+    70% {
+        clip-path: polygon(
+            88.00% 50.00%, 87.85% 55.57%, 87.51% 61.44%, 86.84% 67.28%, 85.65% 72.73%,
+            83.79% 77.45%, 81.10% 81.10%, 77.35% 83.51%, 72.63% 84.93%, 67.24% 85.62%,
+            61.47% 85.86%, 55.63% 85.89%, 50.00% 86.00%, 44.12% 86.42%, 37.66% 87.00%,
+            31.11% 87.38%, 25.00% 87.21%, 19.83% 86.17%, 16.10% 83.90%, 14.08% 80.04%,
+            13.40% 74.80%, 13.66% 68.68%, 14.46% 62.17%, 15.37% 55.78%, 16.00% 50.00%,
+            16.17% 44.58%, 16.17% 39.07%, 16.29% 33.67%, 16.82% 28.61%, 18.06% 24.08%,
+            20.30% 20.30%, 23.75% 17.25%, 28.21% 14.77%, 33.39% 12.82%, 38.95% 11.40%,
+            44.59% 10.46%, 50.00% 10.00%, 55.57% 9.93%, 61.63% 10.26%, 67.76% 11.07%,
+            73.56% 12.49%, 78.61% 14.60%, 82.50% 17.50%, 85.12% 21.49%, 86.79% 26.53%,
+            87.71% 32.27%, 88.09% 38.34%, 88.11% 44.38%
+        );
+        transform: rotate(3deg) scale(1.04);
+    }
+    100% {
+        clip-path: polygon(
+            92.00% 50.00%, 91.45% 54.49%, 89.74% 59.15%, 87.16% 63.85%, 83.98% 68.46%,
+            80.47% 72.85%, 76.90% 76.90%, 73.07% 81.01%, 68.70% 85.37%, 64.01% 89.51%,
+            59.19% 92.97%, 54.45% 95.29%, 50.00% 96.00%, 45.79% 94.73%, 41.64% 91.79%,
+            37.57% 87.69%, 33.60% 83.00%, 29.73% 78.26%, 26.00% 74.00%, 22.02% 70.17%,
+            17.71% 66.31%, 13.52% 62.39%, 9.87% 58.39%, 7.22% 54.27%, 6.00% 50.00%,
+            6.40% 45.43%, 8.12% 40.57%, 10.83% 35.58%, 14.21% 30.66%, 17.94% 25.97%,
+            21.70% 21.70%, 25.72% 17.43%, 30.30% 12.93%, 35.24% 8.67%, 40.31% 5.12%,
+            45.30% 2.74%, 50.00% 2.00%, 54.52% 3.27%, 59.04% 6.26%, 63.49% 10.43%,
+            67.77% 15.21%, 71.80% 20.09%, 75.50% 24.50%, 79.14% 28.56%, 82.84% 32.73%,
+            86.29% 36.98%, 89.17% 41.29%, 91.18% 45.63%
+        );
+        transform: rotate(-3deg) scale(1);
+    }
+}
+
+/* Botão Play/Pause */
+.player-btn {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    color: #2a1f14;
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+}
+
+.player-btn:hover {
+    opacity: 1;
+}
+
+.player-btn i {
+    pointer-events: none;
+}
+
+/* Botão fechar */
+.player-close {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: none;
+    color: #2a1f14;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.55;
+    transition: opacity 0.2s;
+}
+
+.player-close:hover {
+    opacity: 1;
+}
+
+.player-close i {
+    pointer-events: none;
+}
+
+/* Barra de progresso */
+.player-track {
+    position: relative;
+    flex: 1;
+    min-width: 64px;
+    height: 4px;
+    background: rgba(42, 31, 20, 0.2);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.player-fill {
+    height: 100%;
+    width: 0%;
+    background: #2a1f14;
+    border-radius: 2px;
+    transition: width 0.1s linear;
+    position: relative;
+}
+
+.player-thumb {
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #2a1f14;
+    cursor: grab;
+    transition: box-shadow 0.2s;
+}
+
+.player-thumb:active {
+    cursor: grabbing;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Tempo */
+.player-time {
+    color: #2a1f14;
+    font-size: 11px;
+    font-family: 'Caslon 540';
+    font-weight: bold;
+    letter-spacing: 1px;
+    min-width: 36px;
+    text-align: right;
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+/* Linha decorativa que liga mapa → vídeo → créditos */
+.vozes-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+/* Encostado no mapa e no vídeo — sem espaço nas duas pontas.
+   mapa.png tem uma margem transparente de ~270px (numa arte de 3508px
+   de altura / 2524px de largura) entre o desenho e a borda do arquivo —
+   não dá pra recortar o PNG porque os hotspots do script.js usam
+   coordenadas absolutas baseadas nesse tamanho original. Compensa com
+   margin-top negativo; em % é relativo à largura do container (regra do
+   CSS pra margin vertical), que é a mesma base usada pelo mapa, então
+   escala junto em qualquer viewport. */
+.vozes-connector--map-video {
+    /* margin: -10.7% auto 0; */
+}
+
+/* Encostado no vídeo, com 30px só antes dos créditos */
+.vozes-connector--video-credits {
+    margin: 0 auto 30px;
+}
+
+.vozes-connector-image {
+    display: block;
+    /* +40% do tamanho original, -20% em cima disso (clamp(160px, 32vw, 320px)) */
+    width: clamp(179px, 35.8vw, 358px);
+    height: auto;
+    margin-top: -18%;
+
+}
+
+/* =============================================
+   SEÇÃO FINAL - VÍDEO
+   ============================================= */
+
+.vozes-end {
+    padding: 0 0 40px;
+    text-align: center;
+}
+
+.vozes-end-title {
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
+    font-size: 28px;
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+}
+
+.vozes-end-sub {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 30px;
+    font-family: "Lora", serif;
+}
+
+.vozes-video-frame {
+    position: relative;
+    max-width: 640px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.vozes-video {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    cursor: pointer;
+}
+
+/* Em fullscreen, o frame precisa preencher a tela inteira — sem isso,
+   o max-width:640px acima continua valendo (regra de autor sempre vence
+   o estilo padrão de UA para :fullscreen) e o vídeo fica preso a um
+   retângulo pequeno num canto, com o resto da tela em preto. */
+.vozes-video-frame:fullscreen,
+.vozes-video-frame:-webkit-full-screen {
+    max-width: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    border-radius: 0;
+    border: none;
+}
+
+.vozes-video-frame:fullscreen .vozes-video,
+.vozes-video-frame:-webkit-full-screen .vozes-video {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: unset;
+    object-fit: contain;
+}
+
+/* Botão central de play/pause */
+.video-center-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: #fff;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity 0.25s ease, transform 0.2s ease;
+}
+
+.video-center-btn:hover {
+    transform: translate(-50%, -50%) scale(1.06);
+}
+
+.video-center-btn i {
+    pointer-events: none;
+    /* Play não é ótico-centralizado no glifo — desloca um pouco pra
+       compensar e ficar visualmente centralizado no círculo. */
+    margin-left: 2px;
+}
+
+.vozes-video-frame.is-playing .video-center-btn {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.vozes-video-frame.is-playing:hover .video-center-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Barra de controles inferior */
+.video-controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.vozes-video-frame:hover .video-controls,
+.vozes-video-frame:focus-within .video-controls,
+.vozes-video-frame:not(.is-playing) .video-controls {
+    opacity: 1;
+}
+
+.video-track {
+    position: relative;
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.video-fill {
+    height: 100%;
+    width: 0%;
+    background: #fff;
+    border-radius: 2px;
+}
+
+.video-fullscreen-btn {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.75;
+    transition: opacity 0.2s;
+}
+
+.video-fullscreen-btn:hover {
+    opacity: 1;
+}
+
+.video-fullscreen-btn i {
+    pointer-events: none;
+}
+
+.vozes-end-caption {
+    margin-top: 20px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.35);
+    font-family: "Lora", serif;
+    font-style: italic;
+}
+
+/* =============================================
+   CRÉDITOS
+   ============================================= */
+
+.vozes-credits {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 24px;
+    color: #000;
+    font-family: "Lora", serif;
+    margin-top: 60px;
+}
+
+.vozes-credits-title {
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 33px;
+    letter-spacing: -0.03em;
+    margin-bottom: 0px;
+}
+
+.vozes-credits-block {
+    margin-top: 16px;
+}
+
+.vozes-credits-role {
+    font-weight: 700;
+    font-size: 22px;
+}
+
+.vozes-credits-names {
+    font-size: 21px;
+    color: #333;
+}
+
+.vozes-credits-name {
+    font-size: 21px;
+    color: #333;
+}
+
+.vozes-credits-sub {
+    font-family: "Caslon 540", "Lora", Georgia, serif;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 28px;
+    letter-spacing: -0.03em;
+    margin-top: 70px;
+}
+
+/* Texto da parte de baixo dos créditos (prévia + de/com), maior só no
+   desktop — no mobile mantém o mesmo tamanho do resto dos créditos. */
+@media (min-width: 769px) {
+    .vozes-credits-bottom .vozes-credits-sub {
+        font-size: 34px;
+    }
+
+    .vozes-credits-bottom .vozes-credits-role {
+        font-size: 28px;
+    }
+
+    .vozes-credits-bottom .vozes-credits-name {
+        font-size: 27px;
+    }
+}
+
+/* =============================================
+   RESPONSIVO - VOZES INTERATIVA
+   ============================================= */
+
+@media (max-width: 1280px) {
+    .vozes-stage {
+        padding: 20px 20px 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .vozes-stage {
+        padding: 16px 12px 20px;
+    }
+
+    .vozes-end-title {
+        font-size: 22px;
+    }
+
+    .vozes-video-frame {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+
+    /* +20% do tamanho original (clamp(160px, 32vw, 320px)) */
+    .vozes-connector-image {
+        width: clamp(192px, 38.4vw, 384px);
+    }
+
+    .custom-player {
+        gap: 6px;
+    }
+
+    .player-track {
+        min-width: 70px;
+    }
+
+    .player-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+    }
+
+    .vozes-credits-title,
+    .vozes-credits-sub {
+        font-size: 29px;
+    }
+
+    .vozes-credits-role {
+        font-size: 18px;
+    }
+
+    .vozes-credits-names,
+    .vozes-credits-name {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vozes-stage {
+        padding: 12px 8px 16px;
+    }
+
+    .vozes-end-title {
+        font-size: 18px;
+    }
+
+    .player-track {
+        min-width: 50px;
+    }
+
+    .player-time {
+        font-size: 10px;
+        min-width: 30px;
+    }
+
+    .player-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+    }
 }
 
 /* body:not(.vozes-page) {
@@ -575,6 +1596,10 @@ body {
     #img-danarrativa .art-drawing {
         width: 200px;
     }
+
+    .vozes-title {
+        font-size: 38px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -724,6 +1749,10 @@ body {
     .poem-quote {
         margin-left: 30px;
         margin-right: 30px;
+    }
+
+    .vozes-title {
+        font-size: 34px;
     }
 }
 
@@ -881,6 +1910,10 @@ body {
 
     .post-tags {
         font-size: 16px;
+    }
+
+    .vozes-title {
+        font-size: 29px;
     }
 }
 
@@ -1043,5 +2076,9 @@ body {
 
     .post-tags {
         font-size: 15px;
+    }
+
+    .vozes-title {
+        font-size: 24px;
     }
 }

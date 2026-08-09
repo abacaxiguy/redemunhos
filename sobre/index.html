@@ -42,10 +42,10 @@
                         lenine oliveira
                     </p>
                     <p>
-                        <strong>leituras</strong>
+                        <strong>arte</strong>
                     </p>
                     <p class="credit">
-                        lenine oliveira, 
+                        izabella santos
                     </p>
                     <p>
                         <strong>site</strong>
@@ -54,15 +54,53 @@
                         <a href="https://github.com/abacaxiguy" target="_blank">joão lucas</a>, lenine oliveira
                     </p>
                 </div>
+
+                <div class="support">
+                    <p class="support-text"><strong>funcionamos sem suporte ou finalidade financeira, caso queira apoiar nossa continuidade</strong></p>
+                    <img src="../img/qrcode.png" alt="QR Code Pix" class="support-qrcode">
+                    <div class="pix-copy" id="pix-copy" data-pix="00020126360014br.gov.bcb.pix0114+55829967080485204000053039865802BR5903asd6003fsd62070503***63043310">
+                        <button type="button" class="pix-copy-code" aria-label="copiar código pix">
+                            <span class="pix-copy-text">00020126360014br.gov.bcb.pix0114+55829967080485204000053039865802BR5903asd6003fsd62070503***63043310</span>
+                            <span class="pix-copy-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                            </span>
+                        </button>
+                        <span class="pix-copy-feedback">copiar código pix</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 
-    
+
     <div class="watermark">
         <img src="../img/watermark.png" alt="">
     </div>
+
+    <script>
+        const pixButton = document.getElementById('pix-copy');
+        if (pixButton) {
+            const feedback = pixButton.querySelector('.pix-copy-feedback');
+            const defaultFeedback = feedback.textContent;
+            pixButton.addEventListener('click', async () => {
+                try {
+                    await navigator.clipboard.writeText(pixButton.dataset.pix);
+                    feedback.textContent = 'código copiado!';
+                    pixButton.classList.add('copied');
+                } catch (err) {
+                    feedback.textContent = 'não foi possível copiar';
+                }
+                setTimeout(() => {
+                    feedback.textContent = defaultFeedback;
+                    pixButton.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
 

@@ -7,13 +7,125 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
         <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon/favicon-16x16.png" />
         <link rel="manifest" href="../img/favicon/site.webmanifest" />
         <link rel="stylesheet" href="../style.css" />
     </head>
-    <body class="vozes-page">
+    <body class="vozes-interactive">
         <a href="/" class="back-arrow"><img src="../img/back.png" alt="Back" /></a>
+
+        <h2 class="vozes-title">as vozes no meio do redemunho</h2>
+
+        <main class="vozes-stage">
+            <div class="vozes-image-wrap" id="vozes-image-wrap">
+                <img
+                    src="../img/mapa.png"
+                    alt="As vozes no meio do redemunho"
+                    class="vozes-image"
+                    id="vozes-image"
+                    width="2524"
+                    height="3508"
+                />
+
+                <div class="vozes-darken" id="vozes-darken"></div>
+                <div class="vozes-hotspots" id="vozes-hotspots"></div>
+            </div>
+
+            <!--
+            <div class="vozes-connector vozes-connector--map-video" aria-hidden="true">
+                <img class="vozes-connector-image" src="../img/veredas-2.png" alt="" />
+            </div>
+            -->
+
+            <div class="player-host" id="player-host"></div>
+
+            <section class="vozes-end">
+                <!--
+                <div class="vozes-video-frame" id="vozes-video-frame">
+                    <video
+                        class="vozes-video"
+                        id="vozes-video"
+                        preload="none"
+                        poster="../assets/video/cavalo-site-poster.jpg"
+                        playsinline
+                    >
+                        <source src="../assets/video/cavalo-site-web.mp4" type="video/mp4" />
+                        Seu navegador não suporta vídeo HTML5.
+                    </video>
+
+                    <button class="video-center-btn" id="video-center-btn" aria-label="Play/Pause">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+
+                    <div class="video-controls">
+                        <div class="video-track" id="video-track">
+                            <div class="video-fill" id="video-fill"></div>
+                        </div>
+                        <button class="video-fullscreen-btn" id="video-fullscreen-btn" aria-label="Tela cheia">
+                            <i class="fa-solid fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                -->
+
+                <div class="vozes-connector vozes-connector--video-credits" aria-hidden="true">
+                    <img class="vozes-connector-image" src="../img/veredas-1.png" alt="" />
+                </div>
+
+                <div class="vozes-credits">
+                    <!-- <p class="vozes-credits-title">as vozes no meio redemunho</p> -->
+
+                    <div class="vozes-credits-block">
+                        <p class="vozes-credits-role">vozes</p>
+                        <p class="vozes-credits-names">adelaide&nbsp;ivánova, amandyra, cássia&nbsp;de&nbsp;jesus, érika&nbsp;santos, gloria&nbsp;maciel, guilherme&nbsp;gontijo&nbsp;flores, jesuíta&nbsp;barbosa, julia&nbsp;cunha, kennyo&nbsp;severa, lucas&nbsp;litrento, luciano&nbsp;pedro&nbsp;jr, mariana&nbsp;salvador, tamlyn&nbsp;ghannam</p>
+                    </div>
+
+                    <div class="vozes-credits-block">
+                        <p class="vozes-credits-role">concepção e direção geral</p>
+                        <p class="vozes-credits-name">lenine oliveira</p>
+                    </div>
+
+                    <div class="vozes-credits-block">
+                        <p class="vozes-credits-role">cartografia</p>
+                        <p class="vozes-credits-name">izabella santos</p>
+                    </div>
+
+                    <div class="vozes-credits-block">
+                        <p class="vozes-credits-role">design gráfico</p>
+                        <p class="vozes-credits-name">marcos andré</p>
+                    </div>
+
+                    <div class="vozes-credits-block">
+                        <p class="vozes-credits-role">desenvolvimento web</p>
+                        <p class="vozes-credits-name">joão lucas oliveira</p>
+                    </div>
+
+                    <!--
+                    <div class="vozes-credits-bottom">
+                        <p class="vozes-credits-sub">prévia de Arrumo um cavalo e trovejo no mundo</p>
+
+                        <div class="vozes-credits-block">
+                            <p class="vozes-credits-role">de</p>
+                            <p class="vozes-credits-name">lenine oliveira</p>
+                        </div>
+
+                        <div class="vozes-credits-block">
+                            <p class="vozes-credits-role">com</p>
+                            <p class="vozes-credits-name">kennyo severa</p>
+                        </div>
+                    </div>
+                    -->
+
+                    <div class="end-marker">
+                        <img src="../img/watermark.png" alt="" />
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script src="/vozes/script.js"></script>
     </body>
 </html>
