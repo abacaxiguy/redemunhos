@@ -145,7 +145,7 @@ class AudioPlayer {
         const onUp = () => {
             if (!this.isDragging || !this.audio) return;
             this.isDragging = false;
-            this.audio.play();
+            this._play();
         };
         document.addEventListener("mouseup", onUp);
         document.addEventListener("touchend", onUp);
@@ -182,12 +182,29 @@ class AudioPlayer {
     toggle() {
         if (!this.audio) return;
         if (this.audio.paused) {
-            this.audio.play();
+            this._play();
             this.icon.className = "fa-solid fa-pause";
         } else {
             this.audio.pause();
             this.icon.className = "fa-solid fa-play";
         }
+    }
+
+    _play() {
+        const result = this.audio.play();
+        if (!result || typeof result.catch !== "function") return;
+        result.catch(() => {
+            // No iOS/WebKit, o play() imediatamente após troca de faixa
+            // (src novo no mesmo elemento) as vezes é rejeitado mesmo
+            // dentro do gesto de clique — o elemento ainda está
+            // processando a troca de recurso. Uma segunda tentativa
+            // imediata normalmente resolve (é o mesmo efeito de um
+            // segundo toque manual do usuário). Só volta o ícone pra
+            // "play" se essa tentativa também falhar.
+            this.audio.play().catch(() => {
+                this.icon.className = "fa-solid fa-play";
+            });
+        });
     }
 
     seek(fraction) {
