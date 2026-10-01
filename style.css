@@ -228,7 +228,7 @@ body {
 
 .post-list {
     margin-top: 80px;
-    max-width: 600px;
+    max-width: 700px;
 }
 
 .post-list a {
@@ -237,6 +237,7 @@ body {
     text-decoration: none;
     font-size: 22px;
     font-weight: 400;
+    margin-bottom: 20px;
 }
 
 .post-list a:hover {
@@ -313,6 +314,13 @@ body {
 .post-icon img {
     width: 100%;
     height: auto;
+}
+
+.post-icon.post-icon-center img {
+    display: block;
+    width: 326px;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .post-tags {
@@ -491,6 +499,26 @@ body {
     line-height: 1.9;
 }
 
+.poem-quote.epigraph {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: right;
+}
+
+.epigraph-author {
+    display: block;
+    margin-top: 12px;
+}
+
+.poem-quote.no-indent {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.poem-source {
+    font-style: normal;
+}
+
 .section-divider {
     font-size: 24px;
     font-weight: 600;
@@ -504,7 +532,7 @@ body {
 }
 
 .post-list a {
-    width: max-content;
+    width: fit-content;
 }
 
 .vozes-page {
